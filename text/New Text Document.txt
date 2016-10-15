@@ -1,4 +1,0 @@
-Complete the today sales action...... End !
-(1) depo_id,product_id & date if are same all field then update query execute for warranty table.
-(2) Otherwise insert query for warranty table.
-(3) 

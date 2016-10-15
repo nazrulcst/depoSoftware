@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2016 at 02:50 PM
+-- Generation Time: Oct 15, 2016 at 11:01 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -118,7 +118,8 @@ CREATE TABLE `depo_sales` (
 --
 
 INSERT INTO `depo_sales` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `date_time`) VALUES
-(70, 12, 15, 10, 6, 60, '2016-10-16');
+(70, 12, 15, 10, 6, 60, '2016-10-16'),
+(71, 12, 14, 10, 9, 80, '2016-10-17');
 
 -- --------------------------------------------------------
 
@@ -141,9 +142,9 @@ CREATE TABLE `depo_store` (
 --
 
 INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`, `total_price`, `entry_date`) VALUES
-(15, 12, 14, 10, 10, 100, '2016-10-16 03:55:45'),
-(16, 12, 15, 6, 10, 60, '2016-10-16 03:55:59'),
-(17, 12, 16, 20, 5, 100, '2016-10-16 03:56:07');
+(15, 12, 14, 6, 10, 60, '2016-10-16 03:55:45'),
+(16, 12, 15, 3, 10, 30, '2016-10-16 03:55:59'),
+(17, 12, 16, 18, 5, 90, '2016-10-16 03:56:07');
 
 -- --------------------------------------------------------
 
@@ -164,7 +165,8 @@ CREATE TABLE `depo_total_sales` (
 --
 
 INSERT INTO `depo_total_sales` (`id`, `depo_id`, `today_sales_tk`, `total_taka`, `date_time`) VALUES
-(12, 12, 60, 60, '2016-10-16');
+(12, 12, 60, 60, '2016-10-16'),
+(13, 12, 80, 80, '2016-10-17');
 
 -- --------------------------------------------------------
 
@@ -310,13 +312,6 @@ CREATE TABLE `total_warranty` (
   `warranty_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `total_warranty`
---
-
-INSERT INTO `total_warranty` (`id`, `depo_id`, `warranty_quantity`, `total_warranty_tk`, `warranty_date`) VALUES
-(8, 12, 20, 200, '2016-10-16');
-
 -- --------------------------------------------------------
 
 --
@@ -363,7 +358,11 @@ CREATE TABLE `warranty` (
 --
 
 INSERT INTO `warranty` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `replace_date`) VALUES
-(4, 12, 15, 10, 20, 200, '2016-10-16');
+(12, 13, 14, 10, 10, 100, '2016-10-16'),
+(13, 13, 14, 10, 10, 100, '2016-10-16'),
+(14, 13, 14, 10, 10, 100, '2016-10-16'),
+(15, 13, 14, 10, 10, 100, '2016-10-16'),
+(16, 13, 14, 10, 10, 100, '2016-10-16');
 
 --
 -- Indexes for dumped tables
@@ -520,7 +519,7 @@ ALTER TABLE `depo_store`
 -- AUTO_INCREMENT for table `depo_total_sales`
 --
 ALTER TABLE `depo_total_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `due`
 --
@@ -570,7 +569,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `warranty`
 --
 ALTER TABLE `warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- Constraints for dumped tables
 --

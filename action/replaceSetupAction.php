@@ -7,41 +7,48 @@
 	$proPrice=$_POST['proPrice'];
 	$repQuantity=$_POST['repQuantity'];
 	$repTotalPrice=$repQuantity*$proPrice;
-	echo"current date ".$currentDate=date("Y-m-d")."<br>";
+	echo $currentDate=date("Y-m-d");
+	$strCurrentDate=strtotime($currentDate);
+	echo"current = $strCurrentDate<br>";
 	
 	// Product id selet for warranty table data insert & update operation
-		$selWarTableData=$db->prepare("SELECT * FROM warranty WHERE pro_id=? AND replace_date=?");
-		$selWarTableData->bindParam(1,$proId);
-		$selWarTableData->bindParam(2,$currentDate);
+		$selWarTableData=$db->prepare("SELECT * FROM warranty WHERE depo_id=? AND pro_id=? AND replace_date=?");
+		$selWarTableData->bindParam(1,$depoId);
+		$selWarTableData->bindParam(2,$proId);
+		$selWarTableData->bindParam(3,$currentDate);
 		$selWarTableData->execute();
 		$selWarRow=$selWarTableData->fetch(PDO::FETCH_ASSOC);
 		echo $existProId=$selWarRow['pro_id']."<br>";
 		echo $existDepoId=$selWarRow['depo_id']."<br>";
 		echo $existRepDate=$selWarRow['replace_date']."<br>";
-
-		//if(!$ProductId){
-			/*/ Warranty/Replace data insert into arranty table
-			$replaceInsert=$db->prepare("INSERT INTO warranty SET depo_id=?,pro_id=?,pro_price=?,quantity=?,total_price=?,replace_date=?");
-			$replaceInsert->bindParam(1,$depoId);
-			$replaceInsert->bindParam(2,$proId);
-			$replaceInsert->bindParam(3,$proPrice);
-			$replaceInsert->bindParam(4,$repQuantity);
-			$replaceInsert->bindParam(5,$repTotalPrice);
-			$replaceInsert->bindParam(6,$currentDate);
-			$replaceInsert->execute();
-			*/
-			//echo"Insert for warranty table data<br>";
-		//}else{
-			/*/ Warranty/Replace duplicat id update query
-			$repUpdateQuery=$db->prepare("UPDATE warranty SET quantity=?,total_price=? WHERE pro_id=? AND replace_date=?");
-			$repUpdateQuery->bindParam(1,$updateQuantity);
-			$repUpdateQuery->bindParam(2,$updateTotalPrice);
-			$repUpdateQuery->bindParam(3,$proIdExist);
-			$repUpdateQuery->bindParam(4,$currentDate);
-			$repUpdateQuery->execute();
-			*/
-			//echo "Update for warranty table data<br>";
-	//	}
+		$existQuantity=$selWarRow['quantity'];
+		$updateQuantity=$repQuantity+$existQuantity; //Update warranty Quantity Variable
+		$existTotalPrice=$selWarRow['total_price'];
+		$updateTotalPrice=$existTotalPrice+$repTotalPrice;
+		if($existProId==$proId && $existDepoId==$depoId && $currentDate==$existRepDate){
+			echo "nice";
+			// Update Warranty Table data Query
+			$warrantyUpdate=$db->prepare("UPDATE warranty SET quantity=?,total_price=? WHERE depo_id=? AND pro_id=? AND replace_date=?");
+			$warrantyUpdate->bindParam(1,$updateQuantity);
+			$warrantyUpdate->bindParam(2,$updateTotalPrice);
+			$warrantyUpdate->bindParam(3,$existDepoId);
+			$warrantyUpdate->bindParam(4,$existProId);
+			$warrantyUpdate->bindParam(5,$existRepDate);
+			$warrantyUpdate->execute();
+			echo"Update<br>";
+		}else{
+			// Insert warranty table data Query
+			$warrantyInsert=$db->prepare("INSERT INTO warranty SET depo_id=?,pro_id=?,pro_price=?,quantity=?,total_price=?,replace_date=?");
+			$warrantyInsert->bindParam(1,$depoId);
+			$warrantyInsert->bindParam(2,$proId);
+			$warrantyInsert->bindParam(3,$proPrice);
+			$warrantyInsert->bindParam(4,$repQuantity);
+			$warrantyInsert->bindParam(5,$repTotalPrice);
+			$warrantyInsert->bindParam(6,$currentDate);
+			$warrantyInsert->execute();
+			echo"Insert<br>";
+		}
+		//complete the warranty table data insert & update
 	
 
 	// Warranty table data select for Total warranty table inser & update
@@ -60,14 +67,24 @@
 		echo $totalPrice."<br>";
 	
 	
-	// Total warranty table data select
-		$selTotalWarranty=$db->prepare("SELECT total_warranty.*,total_warranty.depo_id AS depoId,depo.id FROM total_warranty LEFT JOIN depo ON total_warranty.depo_id=depo.id WHERE total_warranty.depo_id=? AND total_warranty.warranty_date=?");
-		$selTotalWarranty->bindParam(1,$depoId);
-		$selTotalWarranty->bindParam(2,$currentDate);
-		$selTotalWarranty->execute();
-		$selRow=$selTotalWarranty->fetch(PDO::FETCH_ASSOC);
-
-		$existDate=$selRow['warranty_date'];
+	// Total_warranty table data select
+		$selecTotalWarranty=$db->prepare("SELECT total_warranty.*,total_warranty.depo_id AS depoId,depo.id FROM total_warranty LEFT JOIN depo ON total_warranty.depo_id=depo.id WHERE total_warranty.depo_id=? AND total_warranty.warranty_date=?");
+		$selecTotalWarranty->bindParam(1,$depoId);
+		$selecTotalWarranty->bindParam(2,$currentDate);
+		$selecTotalWarranty->execute();
+		$totalWarrantyRow=$selecTotalWarranty->fetch(PDO::FETCH_ASSOC);
+		echo"Exist depo id".$totalWarrExistDepoId=$totalWarrantyRow['depo_id'];
+		$totalWarrExistQuantity=$totalWarrantyRow['warranty_quantity'];
+		$totalWarrExistTotalTaka=$totalWarrantyRow['total_warranty_tk'];
+		$totalWarrExistDate=$totalWarrantyRow['warranty_date'];
+		$strExistDate=strtotime($totalWarrExistDate);
+		echo"Exit = $strExistDate<br>";
+		if(($totalWarrExistDepoId==$depoId) AND ($strExistDate==$strCurrentDate)){
+			echo"Total warranty Update<br>";
+		}else{
+			echo"Total warranty Insert<br>";
+		}
+		
 		//if($existDepoId==$depoId && $existDate==$currentDate){
 			/*/ Total warranty table data Update
 			$totalWarrantyUpdate=$db->prepare("UPDATE total_warranty SET warranty_quantity=?,total_warranty_tk=? WHERE depo_id=? AND warranty_date=?");
