@@ -14,7 +14,7 @@
 	$salesQuantity=$_POST['salesQuantity'];
 	$totalTaka=$proUnitPrice*$salesQuantity;
 	$currentDate=date("Y-m-d");
-/*
+
 	// Depo store select for store Quantity minus Query 
 		$selStore=$db->prepare("SELECT * FROM depo_store WHERE pro_id=?");
 		$selStore->bindParam(1,$proNameId);
@@ -30,7 +30,7 @@
 		$updateStoreQuery->bindParam(2,$upTotal_price);
 		$updateStoreQuery->bindParam(3,$proNameId);
 		$storeUpExe=$updateStoreQuery->execute();
-*/
+
 	// Depo today_sales data select query
 		$depoTodaySalesQuery=$db->prepare("SELECT * FROM  depo_sales WHERE depo_id=? AND date_time=?");
 		$depoTodaySalesQuery->bindParam(1,$depoNameId);
@@ -91,22 +91,22 @@
 
 		if($exist_depo_id){ // if Exist depo id in same date then execute update query else insert query
 			// Depo total sales update Query
-				$depoTotalSaleUp=$db->prepare("UPDATE depo_total_sales SET today_sales_tk=?,total_taka=? WHERE depo_id=? AND date_time=?");
-				$depoTotalSaleUp->bindParam(1,$depoTotalSales);
-				$depoTotalSaleUp->bindParam(2,$depoTotalSales);
-				$depoTotalSaleUp->bindParam(3,$exist_depo_id);
-				$depoTotalSaleUp->bindParam(4,$currentDate);
-				$depoTotalSaleUp->execute();
-				echo"update";	
+			$depoTotalSaleUp=$db->prepare("UPDATE depo_total_sales SET today_sales_tk=?,total_taka=? WHERE depo_id=? AND date_time=?");
+			$depoTotalSaleUp->bindParam(1,$depoTotalSales);
+			$depoTotalSaleUp->bindParam(2,$depoTotalSales);
+			$depoTotalSaleUp->bindParam(3,$exist_depo_id);
+			$depoTotalSaleUp->bindParam(4,$currentDate);
+			$depoTotalSaleUp->execute();
+			echo"update";	
 		}else{
 			// depo total sales insert query
-				$totalSalesInsert=$db->prepare("INSERT INTO depo_total_sales SET depo_id=?,today_sales_tk=?,total_taka=?,date_time=?");
-				$totalSalesInsert->bindParam(1,$depoNameId);
-				$totalSalesInsert->bindParam(2,$depoTotalSales);
-				$totalSalesInsert->bindParam(3,$depoTotalSales);
-				$totalSalesInsert->bindParam(4,$currentDate);
-				$totalSalesInsert->execute();
-				echo"Insert";	
+			$totalSalesInsert=$db->prepare("INSERT INTO depo_total_sales SET depo_id=?,today_sales_tk=?,total_taka=?,date_time=?");
+			$totalSalesInsert->bindParam(1,$depoNameId);
+			$totalSalesInsert->bindParam(2,$depoTotalSales);
+			$totalSalesInsert->bindParam(3,$depoTotalSales);
+			$totalSalesInsert->bindParam(4,$currentDate);
+			$totalSalesInsert->execute();
+			echo"Insert";	
 		}
 	
 

@@ -51,7 +51,7 @@
 		          </a>
 		          <ul class="treeview-menu">
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoInfoSetup')? 'active':null;?>"><a href="index.php?page=depoInfoSetup&folder=depoinfo"><i class="fa fa-circle-o"></i>Create new depo</a></li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoView')? 'active':null;?>"><a href="index.php?page=depoView&folder=depoinfo"><i class="fa fa-circle-o"></i>View depo</a></li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoView')? 'active':null;?>"><a href="index.php?page=depoView&folder=depoinfo"><i class="fa fa-circle-o"></i>View your depo</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoStoreSetup')? 'active':null;?>"><a href="index.php?page=depoStoreSetup&folder=depoinfo"><i class="fa fa-circle-o"></i>Depo Store</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoTodaySales')? 'active':null;?>"><a href="index.php?page=depoTodaySales&folder=depoinfo"><i class="fa fa-circle-o"></i>Today sales</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewDepoTotalSales')? 'active':null;?>"><a href="index.php?page=viewDepoTotalSales&folder=depoinfo"><i class="fa fa-circle-o"></i>View all sales</a></li>
@@ -74,6 +74,20 @@
 		          </ul>
 		        </li>
 		        <!--Products Setup End-->
+		        <!-- Product replace-->
+		        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='replace')?'active':null;?> treeview">
+		        	<a href="#">
+		            <i class="fa fa-exchange text-green"></i> <span>Replacement Setup</span>
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		          </a>
+		          <ul class="treeview-menu">
+		          	<li class="<?php echo(isset($_GET['page']) && $_GET['page']=='replaceSetup')?'active':null;?>">
+		            	<a href="index.php?page=replaceSetup&folder=replace"><i class="fa fa-circle-o"></i>Replace product</a>
+		            </li>		          	
+		          </ul>
+		        </li>
 		      </ul>
 		    </section>
 		    <!-- /.sidebar -->

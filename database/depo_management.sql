@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2016 at 02:43 PM
+-- Generation Time: Oct 16, 2016 at 02:50 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -30,7 +30,7 @@ CREATE TABLE `balance` (
   `id` int(11) NOT NULL,
   `depo_id` int(11) NOT NULL,
   `total_sales_id` int(11) NOT NULL,
-  `warranty_id` int(11) NOT NULL
+  `total_warranty_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -118,22 +118,7 @@ CREATE TABLE `depo_sales` (
 --
 
 INSERT INTO `depo_sales` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `date_time`) VALUES
-(45, 12, 14, 10, 10, 100, '2016-10-15'),
-(46, 12, 15, 10, 10, 100, '2016-10-15'),
-(47, 12, 16, 5, 20, 100, '2016-10-15'),
-(48, 12, 16, 5, 30, 150, '2016-10-15'),
-(56, 14, 16, 5, 7, 35, '2016-10-15'),
-(57, 14, 16, 5, 7, 35, '2016-10-15'),
-(58, 14, 15, 10, 2, 20, '2016-10-15'),
-(59, 14, 15, 10, 2, 20, '2016-10-15'),
-(60, 12, 16, 5, 10, 50, '2016-10-15'),
-(61, 12, 16, 5, 10, 50, '2016-10-15'),
-(62, 12, 14, 10, 6, 60, '2016-10-15'),
-(63, 12, 14, 10, 6, 60, '2016-10-15'),
-(64, 12, 14, 10, 6, 60, '2016-10-15'),
-(65, 12, 14, 10, 6, 60, '2016-10-15'),
-(66, 14, 16, 5, 10, 50, '2016-10-15'),
-(67, 14, 16, 5, 10, 50, '2016-10-15');
+(70, 12, 15, 10, 6, 60, '2016-10-16');
 
 -- --------------------------------------------------------
 
@@ -156,9 +141,9 @@ CREATE TABLE `depo_store` (
 --
 
 INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`, `total_price`, `entry_date`) VALUES
-(12, 12, 14, -7, 10, -70, '2016-10-11 06:55:58'),
-(13, 12, 16, -39, 5, -195, '2016-10-11 06:56:20'),
-(14, 12, 15, 14, 10, 140, '2016-10-11 07:12:27');
+(15, 12, 14, 10, 10, 100, '2016-10-16 03:55:45'),
+(16, 12, 15, 6, 10, 60, '2016-10-16 03:55:59'),
+(17, 12, 16, 20, 5, 100, '2016-10-16 03:56:07');
 
 -- --------------------------------------------------------
 
@@ -169,7 +154,6 @@ INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`
 CREATE TABLE `depo_total_sales` (
   `id` int(11) NOT NULL,
   `depo_id` int(11) NOT NULL,
-  `prev_total_sales_tk` int(11) NOT NULL,
   `today_sales_tk` int(11) NOT NULL,
   `total_taka` int(11) NOT NULL,
   `date_time` date NOT NULL
@@ -179,13 +163,8 @@ CREATE TABLE `depo_total_sales` (
 -- Dumping data for table `depo_total_sales`
 --
 
-INSERT INTO `depo_total_sales` (`id`, `depo_id`, `prev_total_sales_tk`, `today_sales_tk`, `total_taka`, `date_time`) VALUES
-(4, 13, 0, 9000, 9000, '2016-10-15'),
-(5, 13, 0, 9000, 9000, '2016-10-15'),
-(6, 13, 0, 9000, 9000, '2016-10-15'),
-(7, 13, 0, 9000, 9000, '2016-10-15'),
-(8, 13, 0, 9000, 9000, '2016-10-15'),
-(9, 12, 0, 975, 975, '2016-10-15');
+INSERT INTO `depo_total_sales` (`id`, `depo_id`, `today_sales_tk`, `total_taka`, `date_time`) VALUES
+(12, 12, 60, 60, '2016-10-16');
 
 -- --------------------------------------------------------
 
@@ -299,9 +278,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `user_id`, `cat_id`, `pro_name`, `pro_price`, `quantity`, `total_price`, `uploader`, `entry_date`) VALUES
-(14, 4, 20, 'pen', 10, 3, 30, 'admin', '2016-10-11 06:52:58'),
-(15, 4, 20, 'notes', 10, 2, 20, 'admin', '2016-10-11 06:53:20'),
-(16, 4, 21, 'mouse', 5, 5, 25, 'admin', '2016-10-11 06:54:11');
+(14, 4, 20, 'pen', 10, 20, 200, 'admin', '2016-10-11 06:52:58'),
+(15, 4, 20, 'notes', 10, 38, 380, 'admin', '2016-10-11 06:53:20'),
+(16, 4, 21, 'mouse', 5, 80, 400, 'admin', '2016-10-11 06:54:11');
 
 -- --------------------------------------------------------
 
@@ -325,13 +304,18 @@ CREATE TABLE `total_pro_info` (
 
 CREATE TABLE `total_warranty` (
   `id` int(11) NOT NULL,
-  `warranty_id` int(11) NOT NULL,
   `depo_id` int(11) NOT NULL,
-  `pre_warranty` int(10) NOT NULL,
-  `today_warranty` int(10) NOT NULL,
-  `total_warranty` int(10) NOT NULL,
-  `total_warranty_tk` int(11) NOT NULL
+  `warranty_quantity` int(11) NOT NULL,
+  `total_warranty_tk` int(11) NOT NULL,
+  `warranty_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `total_warranty`
+--
+
+INSERT INTO `total_warranty` (`id`, `depo_id`, `warranty_quantity`, `total_warranty_tk`, `warranty_date`) VALUES
+(8, 12, 20, 200, '2016-10-16');
 
 -- --------------------------------------------------------
 
@@ -367,15 +351,19 @@ INSERT INTO `user` (`id`, `userName`, `password`, `userType`, `last_login`, `sta
 CREATE TABLE `warranty` (
   `id` int(11) NOT NULL,
   `depo_id` int(11) NOT NULL,
-  `cat_id` int(11) NOT NULL,
   `pro_id` int(11) NOT NULL,
-  `pro_name` varchar(30) NOT NULL,
   `pro_price` int(6) NOT NULL,
   `quantity` int(6) NOT NULL,
   `total_price` int(11) NOT NULL,
-  `sales_date` date NOT NULL,
   `replace_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `warranty`
+--
+
+INSERT INTO `warranty` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `replace_date`) VALUES
+(4, 12, 15, 10, 20, 200, '2016-10-16');
 
 --
 -- Indexes for dumped tables
@@ -480,8 +468,8 @@ ALTER TABLE `total_pro_info`
 --
 ALTER TABLE `total_warranty`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `warranty_id` (`warranty_id`),
-  ADD KEY `depo_id` (`depo_id`);
+  ADD KEY `depo_id` (`depo_id`),
+  ADD KEY `depo_id_2` (`depo_id`);
 
 --
 -- Indexes for table `user`
@@ -495,8 +483,9 @@ ALTER TABLE `user`
 ALTER TABLE `warranty`
   ADD PRIMARY KEY (`id`),
   ADD KEY `depo_id` (`depo_id`),
-  ADD KEY `cat_id` (`cat_id`),
-  ADD KEY `pro_id` (`pro_id`);
+  ADD KEY `pro_id` (`pro_id`),
+  ADD KEY `depo_id_2` (`depo_id`),
+  ADD KEY `pro_id_2` (`pro_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -521,17 +510,17 @@ ALTER TABLE `depo`
 -- AUTO_INCREMENT for table `depo_sales`
 --
 ALTER TABLE `depo_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 --
 -- AUTO_INCREMENT for table `depo_store`
 --
 ALTER TABLE `depo_store`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `depo_total_sales`
 --
 ALTER TABLE `depo_total_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `due`
 --
@@ -571,12 +560,17 @@ ALTER TABLE `total_pro_info`
 -- AUTO_INCREMENT for table `total_warranty`
 --
 ALTER TABLE `total_warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+--
+-- AUTO_INCREMENT for table `warranty`
+--
+ALTER TABLE `warranty`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Constraints for dumped tables
 --
@@ -655,16 +649,14 @@ ALTER TABLE `total_pro_info`
 -- Constraints for table `total_warranty`
 --
 ALTER TABLE `total_warranty`
-  ADD CONSTRAINT `total_warranty_ibfk_1` FOREIGN KEY (`warranty_id`) REFERENCES `warranty` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `total_warranty_ibfk_2` FOREIGN KEY (`depo_id`) REFERENCES `depo` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `total_warranty_ibfk_2` FOREIGN KEY (`depo_id`) REFERENCES `depo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `warranty`
 --
 ALTER TABLE `warranty`
-  ADD CONSTRAINT `warranty_ibfk_1` FOREIGN KEY (`depo_id`) REFERENCES `depo` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `warranty_ibfk_2` FOREIGN KEY (`cat_id`) REFERENCES `category` (`id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `warranty_ibfk_3` FOREIGN KEY (`pro_id`) REFERENCES `products` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `warranty_ibfk_1` FOREIGN KEY (`depo_id`) REFERENCES `depo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `warranty_ibfk_3` FOREIGN KEY (`pro_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

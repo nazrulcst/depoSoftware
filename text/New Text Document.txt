@@ -1,0 +1,6 @@
+Depo total sales theke data minus hobe (1)
+empty error message show hobe (2)
+html a emty verify korte hobe (3)
+total warranty taka & others sob kisu depo total sales theke minus hobe (4)
+total warranty data sob plus hoye balance table a jabe (5)
+ajax request a handdling kora hobe (6)
