@@ -14,7 +14,8 @@
 	$salesQuantity=$_POST['salesQuantity'];
 	$totalTaka=$proUnitPrice*$salesQuantity;
 	$currentDate=date("Y-m-d");
-
+	$curTimeStr=strtotime($currentDate);
+	
 	// Depo store select for store Quantity minus Query 
 		$selStore=$db->prepare("SELECT * FROM depo_store WHERE pro_id=?");
 		$selStore->bindParam(1,$proNameId);
@@ -37,19 +38,29 @@
 		$depoTodaySalesQuery->bindParam(2,$currentDate);
 		$depoTodaySalesQuery->execute();
 		$selRow=$depoTodaySalesQuery->fetch(PDO::FETCH_ASSOC);
-		$existProductId=$selRow['pro_id'];
 		$quantity=$selRow['quantity'];
-		$updateQuantity=$quantity+$salesQuantity;
 		$Totalprice=$selRow['total_price'];
 		$upTotal_price=$Totalprice+$totalTaka;
-		if($existProductId){
+	// depos sales select pro_id Query
+		$proId=$db->prepare("SELECT depo_sales.*,depo_sales.id AS depoSalesId,depo.id,products.id AS proDuctId FROM depo_sales LEFT JOIN depo ON depo_sales.depo_id=depo.id LEFT JOIN products ON depo_sales.pro_id=products.id WHERE depo_sales.pro_id=? AND depo_sales.date_time=?");
+		$proId->bindParam(1,$proNameId);
+		$proId->bindParam(2,$currentDate);
+		$proId->execute();
+		$proIdRow=$proId->fetch(PDO::FETCH_ASSOC);
+		$existProductId=$proIdRow['pro_id'];
+		$existDate=$proIdRow['date_time'];
+		$existQuantity=$proIdRow['quantity']."<br>";
+		$upTotalQuantity=$existQuantity+$salesQuantity;
+		$existDateStr=strtotime($existDate);
+		if($existProductId && $existDateStr==$curTimeStr){
 			// Depo sale update Query
 			$depoSalesUpQuery=$db->prepare("UPDATE depo_sales SET quantity=?,total_price=? WHERE pro_id=? AND date_time=?");
-			$depoSalesUpQuery->bindParam(1,$updateQuantity);
+			$depoSalesUpQuery->bindParam(1,$upTotalQuantity);
 			$depoSalesUpQuery->bindParam(2,$upTotal_price);
 			$depoSalesUpQuery->bindParam(3,$existProductId);
 			$depoSalesUpQuery->bindParam(4,$currentDate);
 			$depoSalesUpQuery->execute();
+			echo"updateID & updateDate<br>";
 		}else{
 			// Depo today_sales table data insert Query 
 			$todaySalesInsert=$db->prepare("INSERT INTO depo_sales SET depo_id=?,pro_id=?,pro_price=?,quantity=?,total_price=?,date_time=?");
@@ -59,14 +70,9 @@
 			$todaySalesInsert->bindParam(4,$salesQuantity);
 			$todaySalesInsert->bindParam(5,$totalTaka);
 			$todaySalesInsert->bindParam(6,$currentDate);
-			$salesInsertExe=$todaySalesInsert->execute();
-			if( $salesInsertExe){
-				echo"Your query has been successfully work";
-			}else echo"Your operations has been failed !";
+			$todaySalesInsert->execute();
+			echo"insertID & insertDate<br>";
 		}
-
-	
-		
 
 	// select from depo sales/today sales for total sales table report
 		$depoSalesQuery=$db->prepare("SELECT * FROM  depo_sales WHERE depo_id=? AND date_time=?");
@@ -108,9 +114,4 @@
 			$totalSalesInsert->execute();
 			echo"Insert";	
 		}
-	
-
-
-
-
 ?>

@@ -13,7 +13,7 @@ $sl="";
 ?>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-12" style="margin-bottom:20px;">
+		<div class="col-sm-10 col-sm-offset-1" style="margin-bottom:20px;">
 			<h3 class="text-center text-info">Add new product</h3>
 			<hr>
 			<?php
