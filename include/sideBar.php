@@ -85,6 +85,9 @@
 		          <ul class="treeview-menu">
 		          	<li class="<?php echo(isset($_GET['page']) && $_GET['page']=='replaceSetup')?'active':null;?>">
 		            	<a href="index.php?page=replaceSetup&folder=replace"><i class="fa fa-circle-o"></i>Replace product</a>
+		            </li>
+		            <li class="<?php echo(isset($_GET['page']) && $_GET['page']=='replaceView')?'active':null;?>">
+		            	<a href="index.php?page=replaceView&folder=replace"><i class="fa fa-circle-o"></i>Replace product view</a>
 		            </li>		          	
 		          </ul>
 		        </li>

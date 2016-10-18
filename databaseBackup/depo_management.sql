@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 15, 2016 at 11:01 PM
+-- Generation Time: Oct 18, 2016 at 01:56 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -118,8 +118,7 @@ CREATE TABLE `depo_sales` (
 --
 
 INSERT INTO `depo_sales` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `date_time`) VALUES
-(70, 12, 15, 10, 6, 60, '2016-10-16'),
-(71, 12, 14, 10, 9, 80, '2016-10-17');
+(94, 12, 16, 5, 11, 55, '2016-10-17');
 
 -- --------------------------------------------------------
 
@@ -134,17 +133,17 @@ CREATE TABLE `depo_store` (
   `pro_quantity` int(6) NOT NULL,
   `pro_price` int(6) NOT NULL,
   `total_price` int(11) NOT NULL,
-  `entry_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `store_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `depo_store`
 --
 
-INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`, `total_price`, `entry_date`) VALUES
-(15, 12, 14, 6, 10, 60, '2016-10-16 03:55:45'),
-(16, 12, 15, 3, 10, 30, '2016-10-16 03:55:59'),
-(17, 12, 16, 18, 5, 90, '2016-10-16 03:56:07');
+INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`, `total_price`, `store_date`) VALUES
+(25, 12, 14, 50, 10, 500, '2016-10-17'),
+(26, 12, 15, 100, 10, 1000, '2016-10-17'),
+(27, 12, 16, 4, 5, 20, '2016-10-17');
 
 -- --------------------------------------------------------
 
@@ -165,8 +164,7 @@ CREATE TABLE `depo_total_sales` (
 --
 
 INSERT INTO `depo_total_sales` (`id`, `depo_id`, `today_sales_tk`, `total_taka`, `date_time`) VALUES
-(12, 12, 60, 60, '2016-10-16'),
-(13, 12, 80, 80, '2016-10-17');
+(14, 12, 55, 55, '2016-10-17');
 
 -- --------------------------------------------------------
 
@@ -280,9 +278,11 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `user_id`, `cat_id`, `pro_name`, `pro_price`, `quantity`, `total_price`, `uploader`, `entry_date`) VALUES
-(14, 4, 20, 'pen', 10, 20, 200, 'admin', '2016-10-11 06:52:58'),
-(15, 4, 20, 'notes', 10, 38, 380, 'admin', '2016-10-11 06:53:20'),
-(16, 4, 21, 'mouse', 5, 80, 400, 'admin', '2016-10-11 06:54:11');
+(14, 4, 20, 'pen', 10, 200, 2000, 'admin', '2016-10-11 06:52:58'),
+(15, 4, 20, 'notes', 10, 1130, 11300, 'admin', '2016-10-11 06:53:20'),
+(16, 4, 21, 'mouse', 5, 20, 100, 'admin', '2016-10-11 06:54:11'),
+(17, 4, 23, 'lol', 100, 200, 20000, 'admin', '2016-10-17 06:27:46'),
+(18, 4, 26, 'kololm', 52, 500, 26000, 'admin', '2016-10-18 06:20:59');
 
 -- --------------------------------------------------------
 
@@ -311,6 +311,14 @@ CREATE TABLE `total_warranty` (
   `total_warranty_tk` int(11) NOT NULL,
   `warranty_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `total_warranty`
+--
+
+INSERT INTO `total_warranty` (`id`, `depo_id`, `warranty_quantity`, `total_warranty_tk`, `warranty_date`) VALUES
+(11, 13, 2339, 20875, '2016-10-18'),
+(12, 12, 470, 4550, '2016-10-18');
 
 -- --------------------------------------------------------
 
@@ -358,11 +366,13 @@ CREATE TABLE `warranty` (
 --
 
 INSERT INTO `warranty` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `replace_date`) VALUES
-(12, 13, 14, 10, 10, 100, '2016-10-16'),
-(13, 13, 14, 10, 10, 100, '2016-10-16'),
-(14, 13, 14, 10, 10, 100, '2016-10-16'),
-(15, 13, 14, 10, 10, 100, '2016-10-16'),
-(16, 13, 14, 10, 10, 100, '2016-10-16');
+(18, 12, 16, 5, 30, 150, '2016-10-18'),
+(19, 12, 15, 10, 380, 3800, '2016-10-18'),
+(20, 12, 14, 10, 60, 600, '2016-10-18'),
+(21, 13, 16, 5, 503, 2515, '2016-10-18'),
+(22, 13, 15, 10, 36, 360, '2016-10-18'),
+(23, 13, 14, 10, 1800, 18000, '2016-10-18'),
+(24, 13, 16, 5, 300, 1500, '2016-10-17');
 
 --
 -- Indexes for dumped tables
@@ -394,7 +404,8 @@ ALTER TABLE `depo`
 ALTER TABLE `depo_sales`
   ADD PRIMARY KEY (`id`),
   ADD KEY `depo_id` (`depo_id`),
-  ADD KEY `pro_id` (`pro_id`);
+  ADD KEY `pro_id` (`pro_id`),
+  ADD KEY `pro_id_2` (`pro_id`);
 
 --
 -- Indexes for table `depo_store`
@@ -468,7 +479,8 @@ ALTER TABLE `total_pro_info`
 ALTER TABLE `total_warranty`
   ADD PRIMARY KEY (`id`),
   ADD KEY `depo_id` (`depo_id`),
-  ADD KEY `depo_id_2` (`depo_id`);
+  ADD KEY `depo_id_2` (`depo_id`),
+  ADD KEY `depo_id_3` (`depo_id`);
 
 --
 -- Indexes for table `user`
@@ -509,17 +521,17 @@ ALTER TABLE `depo`
 -- AUTO_INCREMENT for table `depo_sales`
 --
 ALTER TABLE `depo_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
 --
 -- AUTO_INCREMENT for table `depo_store`
 --
 ALTER TABLE `depo_store`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `depo_total_sales`
 --
 ALTER TABLE `depo_total_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `due`
 --
@@ -549,7 +561,7 @@ ALTER TABLE `package`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `total_pro_info`
 --
@@ -559,7 +571,7 @@ ALTER TABLE `total_pro_info`
 -- AUTO_INCREMENT for table `total_warranty`
 --
 ALTER TABLE `total_warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `user`
 --
@@ -569,7 +581,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `warranty`
 --
 ALTER TABLE `warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- Constraints for dumped tables
 --
