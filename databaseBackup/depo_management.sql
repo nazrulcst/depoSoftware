@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2016 at 01:56 PM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.23
+-- Generation Time: Oct 19, 2016 at 02:30 PM
+-- Server version: 10.1.16-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -28,10 +28,20 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `balance` (
   `id` int(11) NOT NULL,
-  `depo_id` int(11) NOT NULL,
   `total_sales_id` int(11) NOT NULL,
-  `total_warranty_id` int(11) NOT NULL
+  `total_sales_taka` int(11) NOT NULL,
+  `total_warranty_id` int(11) NOT NULL,
+  `total_war_taka` int(11) NOT NULL,
+  `net_balance` int(11) NOT NULL,
+  `bal_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `balance`
+--
+
+INSERT INTO `balance` (`id`, `total_sales_id`, `total_sales_taka`, `total_warranty_id`, `total_war_taka`, `net_balance`, `bal_date`) VALUES
+(6, 15, 300, 13, 200, 100, '2016-10-19');
 
 -- --------------------------------------------------------
 
@@ -118,7 +128,8 @@ CREATE TABLE `depo_sales` (
 --
 
 INSERT INTO `depo_sales` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `date_time`) VALUES
-(94, 12, 16, 5, 11, 55, '2016-10-17');
+(95, 12, 16, 5, 20, 100, '2016-10-19'),
+(96, 12, 15, 10, 20, 200, '2016-10-19');
 
 -- --------------------------------------------------------
 
@@ -142,8 +153,8 @@ CREATE TABLE `depo_store` (
 
 INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`, `total_price`, `store_date`) VALUES
 (25, 12, 14, 50, 10, 500, '2016-10-17'),
-(26, 12, 15, 100, 10, 1000, '2016-10-17'),
-(27, 12, 16, 4, 5, 20, '2016-10-17');
+(26, 12, 15, 80, 10, 800, '2016-10-17'),
+(27, 12, 16, -16, 5, -80, '2016-10-17');
 
 -- --------------------------------------------------------
 
@@ -164,7 +175,7 @@ CREATE TABLE `depo_total_sales` (
 --
 
 INSERT INTO `depo_total_sales` (`id`, `depo_id`, `today_sales_tk`, `total_taka`, `date_time`) VALUES
-(14, 12, 55, 55, '2016-10-17');
+(15, 12, 300, 300, '2016-10-19');
 
 -- --------------------------------------------------------
 
@@ -318,7 +329,8 @@ CREATE TABLE `total_warranty` (
 
 INSERT INTO `total_warranty` (`id`, `depo_id`, `warranty_quantity`, `total_warranty_tk`, `warranty_date`) VALUES
 (11, 13, 2339, 20875, '2016-10-18'),
-(12, 12, 470, 4550, '2016-10-18');
+(12, 12, 470, 4550, '2016-10-18'),
+(13, 12, 20, 200, '2016-10-19');
 
 -- --------------------------------------------------------
 
@@ -372,7 +384,8 @@ INSERT INTO `warranty` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `tot
 (21, 13, 16, 5, 503, 2515, '2016-10-18'),
 (22, 13, 15, 10, 36, 360, '2016-10-18'),
 (23, 13, 14, 10, 1800, 18000, '2016-10-18'),
-(24, 13, 16, 5, 300, 1500, '2016-10-17');
+(24, 13, 16, 5, 300, 1500, '2016-10-17'),
+(25, 12, 15, 10, 20, 200, '2016-10-19');
 
 --
 -- Indexes for dumped tables
@@ -383,7 +396,8 @@ INSERT INTO `warranty` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `tot
 --
 ALTER TABLE `balance`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `depo_id` (`depo_id`);
+  ADD KEY `total_sales_id` (`total_sales_id`),
+  ADD KEY `total_warranty_id` (`total_warranty_id`);
 
 --
 -- Indexes for table `category`
@@ -421,7 +435,8 @@ ALTER TABLE `depo_store`
 --
 ALTER TABLE `depo_total_sales`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `depo_id` (`depo_id`);
+  ADD KEY `depo_id` (`depo_id`),
+  ADD KEY `depo_id_2` (`depo_id`);
 
 --
 -- Indexes for table `due`
@@ -506,7 +521,7 @@ ALTER TABLE `warranty`
 -- AUTO_INCREMENT for table `balance`
 --
 ALTER TABLE `balance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `category`
 --
@@ -521,7 +536,7 @@ ALTER TABLE `depo`
 -- AUTO_INCREMENT for table `depo_sales`
 --
 ALTER TABLE `depo_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 --
 -- AUTO_INCREMENT for table `depo_store`
 --
@@ -531,7 +546,7 @@ ALTER TABLE `depo_store`
 -- AUTO_INCREMENT for table `depo_total_sales`
 --
 ALTER TABLE `depo_total_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `due`
 --
@@ -571,7 +586,7 @@ ALTER TABLE `total_pro_info`
 -- AUTO_INCREMENT for table `total_warranty`
 --
 ALTER TABLE `total_warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `user`
 --
@@ -581,7 +596,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `warranty`
 --
 ALTER TABLE `warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- Constraints for dumped tables
 --
@@ -590,7 +605,8 @@ ALTER TABLE `warranty`
 -- Constraints for table `balance`
 --
 ALTER TABLE `balance`
-  ADD CONSTRAINT `balance_ibfk_1` FOREIGN KEY (`depo_id`) REFERENCES `depo` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `balance_ibfk_1` FOREIGN KEY (`total_sales_id`) REFERENCES `depo_total_sales` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `balance_ibfk_2` FOREIGN KEY (`total_warranty_id`) REFERENCES `total_warranty` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `depo`

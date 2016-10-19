@@ -15,7 +15,7 @@
 	$totalTaka=$proUnitPrice*$salesQuantity;
 	$currentDate=date("Y-m-d");
 	$curTimeStr=strtotime($currentDate);
-	
+	/*
 	// Depo store select for store Quantity minus Query 
 		$selStore=$db->prepare("SELECT * FROM depo_store WHERE pro_id=?");
 		$selStore->bindParam(1,$proNameId);
@@ -114,4 +114,59 @@
 			$totalSalesInsert->execute();
 			echo"Insert";	
 		}
+	*/	
+	// Select total_sales tabale data for balance table data insert & update Query
+		$selTotal_sales=$db->prepare("SELECT depo_total_sales.*,depo_total_sales.id AS totalSalesId FROM depo_total_sales LEFT JOIN depo ON depo_total_sales.id=depo.id WHERE depo_total_sales.depo_id=? AND depo_total_sales.date_time=?");
+		$selTotal_sales->bindParam(1,$depoNameId);
+		$selTotal_sales->bindParam(2,$currentDate);
+		$selTotal_sales->execute();
+		$totalSalesRow=$selTotal_sales->fetch(PDO::FETCH_ASSOC);
+		$depoTotalSalesId=$totalSalesRow['totalSalesId'];
+		$depoTotalSalesTaka=$totalSalesRow['total_taka'];
+	// Select Total warranty table data for balance table data insert & update
+		$selectTotalWar=$db->prepare("SELECT total_warranty.*,total_warranty.id AS totalWarTblId,depo.id AS warDepoid FROM total_warranty LEFT JOIN depo ON total_warranty.depo_id=depo.id WHERE total_warranty.depo_id=? AND total_warranty.warranty_date=?");
+		$selectTotalWar->bindParam(1,$depoNameId);
+		$selectTotalWar->bindParam(2,$currentDate);
+		$selectTotalWar->execute();
+		$totalWarRow=$selectTotalWar->fetch(PDO::FETCH_ASSOC);
+		$totalWarId=$totalWarRow['totalWarTblId'];
+		$totalWarTaka=$totalWarRow['total_warranty_tk'];
+		$netBalance=$depoTotalSalesTaka-$totalWarTaka;
+	// Balance selecet 
+		$balSelQuery=$db->prepare("SELECT * FROM balance WHERE total_sales_id=? AND total_warranty_id=? AND bal_date=?");
+		$balSelQuery->bindParam(1,$depoTotalSalesId);
+		$balSelQuery->bindParam(2,$totalWarId);
+		$balSelQuery->bindParam(3,$currentDate);
+		$balSelQuery->execute();
+		$balSelRow=$balSelQuery->fetch(PDO::FETCH_ASSOC);
+		$existBalSalesId=$balSelRow['total_sales_id'];
+		$existBalTotalWarId=$balSelRow['total_warranty_id'];
+		$existBalDate=$balSelRow['bal_date'];
+		$strBalDate=strtotime($existBalDate);
+		if($existBalSalesId==$depoTotalSalesId && $existBalTotalWarId==$totalWarId && $strBalDate==$curTimeStr){
+			// Balance Update Query
+			echo"nice work";
+			$updateBalQuery=$db->prepare("UPDATE balance SET total_sales_taka=?,total_war_taka=?,net_balance=? WHERE total_sales_id=? AND total_warranty_id=? AND bal_date=?");
+			$updateBalQuery->bindParam(1,$depoTotalSalesTaka);
+			$updateBalQuery->bindParam(2,$totalWarTaka);
+			$updateBalQuery->bindParam(3,$netBalance);
+			$updateBalQuery->bindParam(4,$depoTotalSalesId);
+			$updateBalQuery->bindParam(5,$totalWarId);
+			$updateBalQuery->bindParam(6,$strBalDate);
+			$updateBalQuery->execute();
+			echo"Update";
+		}else{
+			// Balance insert & Update
+			$balInsert=$db->prepare("INSERT INTO balance SET total_sales_id=?,total_sales_taka=?,total_warranty_id=?,total_war_taka=?,net_balance=?,bal_date=?");
+			$balInsert->bindParam(1,$depoTotalSalesId);
+			$balInsert->bindParam(2,$depoTotalSalesTaka);
+			$balInsert->bindParam(3,$totalWarId);
+			$balInsert->bindParam(4,$totalWarTaka);
+			$balInsert->bindParam(5,$netBalance);
+			$balInsert->bindParam(6,$currentDate);
+			$balInsert->execute();
+			echo"Insert";
+		}
+		
+		
 ?>
