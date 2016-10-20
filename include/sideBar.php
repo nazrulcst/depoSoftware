@@ -41,7 +41,7 @@
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='totalWarrantyView')? 'active':null;?>"><a href="index.php?page=totalWarrantyView&folder=setup"><i class="fa fa-circle-o"></i>View all replacement product</a>
 		            </li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlltotalBalance')?'active':null;?>"><a href="index.php?page=viewAlltotalBalance&folder=setup">
-		            	<i class="fa fa-circle-o"></i>View balance chart
+		            	<i class="fa fa-circle-o"></i>Daily balance chart
 		            </a>
 		            	
 		            </li>
@@ -51,7 +51,7 @@
 		        <!--Depo Info start-->
 		        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='depoinfo')?'active':null;?> treeview">
 		          <a href="#">
-		            <i class="fa fa-building text-green"></i> <span>Depo Setup</span>
+		            <i class="fa fa-building text-green"></i> <span>Depo/Store Setup</span>
 		            <span class="pull-right-container">
 		              <i class="fa fa-angle-left pull-right"></i>
 		            </span>
@@ -84,7 +84,7 @@
 		        <!-- Product replace-->
 		        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='replace')?'active':null;?> treeview">
 		        	<a href="#">
-		            <i class="fa fa-exchange text-green"></i> <span>Replacement Setup</span>
+		            <i class="fa fa-exchange text-green"></i> <span>Replacement</span>
 		            <span class="pull-right-container">
 		              <i class="fa fa-angle-left pull-right"></i>
 		            </span>
@@ -98,6 +98,22 @@
 		            </li>		          	
 		          </ul>
 		        </li>
+		         <!--Workshop Setup start-->
+		        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='workshop')?'active':null;?> treeview">
+		          <a href="#">
+		            <i class="fa fa-wrench text-green"></i> <span>Workshop</span>
+		            <span class="pull-right-container">
+		              <i class="fa fa-angle-left pull-right"></i>
+		            </span>
+		          </a>
+		          <ul class="treeview-menu">
+		          	<li class="<?php echo(isset($_GET['page']) && $_GET['page']=='workShopSetup')?'active':null;?>">
+		            	<a href="index.php?page=workShopSetup&folder=workshop"><i class="fa fa-circle-o"></i>Add product</a>
+		            </li>
+		            
+		          </ul>
+		        </li>
+		        <!--Workshop Setup End-->
 		      </ul>
 		    </section>
 		    <!-- /.sidebar -->

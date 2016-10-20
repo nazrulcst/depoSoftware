@@ -6,7 +6,7 @@
 		    reserved.
 		  </footer><!--/End footer-->
 		</div><!-- /wrapper -->
-				<!--use for-->
+				<!--use for-->		
 		<script src="jquery-3.1.0.min.js"></script>
 		<!-- jQuery 2.2.3 -->
 		<script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
