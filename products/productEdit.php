@@ -49,7 +49,7 @@
 				</div>
 				<div class="col-sm-5">
 					<div class="form-group">
-						<label for="proQuantity">Product Quantity :</label>
+						<label for="proQuantity">Product Quantity(pcs) :</label>
 						<input type="number" id="proQuantity" name="proQuantity" placeholder="Enter your product quantity" class="form-control" value="<?php echo $proEditRow['quantity'];?>">
 					</div>
 				</div>

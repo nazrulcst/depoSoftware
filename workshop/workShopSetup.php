@@ -41,15 +41,15 @@
 				</div>
 				<div class="col-sm-5 col-sm-offset-1">
 					<div class="form-group">
-						<label for="repQuantity">Quantity:</label>
+						<label for="repQuantity">Quantity(pcs) :</label>
 						<input type="text" name="repQuantity" class="form-control" id="repQuantity" placeholder="Enter your replacement quantity">
 					</div>
 				</div>
 				<div class="col-sm-5">
 					<div class="form-group">
-						<label for="name">Add option</label>
-						<select name="" class="form-control" id="actionSel">
-							<option value="">select any option</option>
+						<label for="name">Choice a category :</label>
+						<select name="selectMode" class="form-control" id="actionSel">
+							<option value="">Select your option</option>
 							<option value="replaced">Replaced</option>
 							<option value="damaged">Damaged</option>
 						</select>
