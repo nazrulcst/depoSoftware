@@ -85,17 +85,5 @@
 					$("#actionSel").val(null);
 				}
 			});
-		$('.workShopForm').submit(function(){
-			var ProName=$("#ProName").val();
-			var ProPrice=$("#proPrice").val();
-			var ProQuantity=$("#repQuantity").val();
-			var ActionMode=$("#actionSel").val();
-			$.ajax({
-				url:'action/workShopSetupAction.php',
-				type:'POST',
-				data:{proNameVal:ProName,proPriceVal:ProPrice,QuantityVal:ProQuantity,actionVal:ActionMode},
-				success:function(dataValue){}
-			});
-		});
 	});
 </script>

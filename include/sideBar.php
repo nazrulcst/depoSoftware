@@ -38,14 +38,18 @@
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlluser')? 'active':null;?>"><a href="index.php?page=viewAlluser&folder=setup"><i class="fa fa-circle-o"></i>All user list</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlldepoList')? 'active':null;?>"><a href="index.php?page=viewAlldepoList&folder=setup"><i class="fa fa-circle-o"></i>All depo list</a>
 		            </li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='totalWarrantyView')? 'active':null;?>"><a href="index.php?page=totalWarrantyView&folder=setup"><i class="fa fa-circle-o"></i>View all replacement product</a>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='totalWarrantyView')? 'active':null;?>"><a href="index.php?page=totalWarrantyView&folder=setup"><i class="fa fa-circle-o"></i>All replaced product</a>
 		            </li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlltotalBalance')?'active':null;?>"><a href="index.php?page=viewAlltotalBalance&folder=setup">
 		            	<i class="fa fa-circle-o"></i>Daily balance chart
 		            </a>
 		            	
+		            </li><li class="<?php echo (isset($_GET['page']) && $_GET['page']=='monthlyFinalBalanceSetup')?'active':null;?>"><a href="index.php?page=monthlyFinalBalanceSetup&folder=setup">
+		            	<i class="fa fa-circle-o"></i>Monthly balance Sheet
+		            </a>
+		            	
 		            </li>
-
+		            
 		          </ul>
 		        </li>
 		        <!--Depo Info start-->
