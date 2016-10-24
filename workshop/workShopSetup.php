@@ -19,6 +19,12 @@
 		<div class="col-sm-10 col-sm-offset-1">
 			<h3 class="text-center text-green">Workshop replacement product</h3>
 			<hr>
+			<?php
+				if(isset($_SESSION['workMsg'])){
+					echo $_SESSION['workMsg'];
+					unset($_SESSION['workMsg']);
+				}
+			?>
 		</div>
 	</div>
 	<div class="row">
@@ -27,7 +33,7 @@
 				<div class="col-sm-5 col-sm-offset-1">
 					<div class="form-group">
 						<label for="depo">Product Name :</label>
-						<select name="ProName" class="form-control" id="ProName">
+						<select name="ProName" class="form-control" id="ProName" required="1">
 							<option value="">Select product name</option>
 							<?php echo $proName;?>
 						</select>
@@ -36,19 +42,19 @@
 				<div class="col-sm-5">
 					<div class="form-group">
 						<label for="proPrice">Product price :</label>
-						<input type="text" name="proPrice" class="form-control" id="proPrice" placeholder="Product unit price">	
+						<input type="text" name="proPrice" class="form-control" id="proPrice" placeholder="Product unit price" required="1">	
 					</div>
 				</div>
 				<div class="col-sm-5 col-sm-offset-1">
 					<div class="form-group">
 						<label for="repQuantity">Quantity(pcs) :</label>
-						<input type="text" name="repQuantity" class="form-control" id="repQuantity" placeholder="Enter your replacement quantity">
+						<input type="number" name="repQuantity" class="form-control" id="repQuantity" placeholder="Enter your replacement quantity" required="1">
 					</div>
 				</div>
 				<div class="col-sm-5">
 					<div class="form-group">
 						<label for="name">Choice a category :</label>
-						<select name="selectMode" class="form-control" id="actionSel">
+						<select name="selectMode" class="form-control" id="actionSel" required="1">
 							<option value="">Select your option</option>
 							<option value="replaced">Replaced</option>
 							<option value="damaged">Damaged</option>

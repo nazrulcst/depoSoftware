@@ -24,7 +24,13 @@
 	<div class="row">
 		<div class="col-sm-10 col-sm-offset-1">
 			<h3 class="text-center text-green">Enter your today sales product item</h3>
-			<hr>	
+			<hr>
+			<?php
+				if(isset($_SESSION['rpMsg'])){
+					echo $_SESSION['rpMsg'];
+					unset($_SESSION['rpMsg']);
+				}
+			?>	
 		</div>
 	</div>
 	<div class="row">
@@ -33,7 +39,7 @@
 			<div class="col-sm-5 col-sm-offset-1">
 				<div class="form-group">
 					<label for="depo">Depo Name :</label>
-					<select name="depoName" class="form-control" id="depoId">
+					<select name="depoName" class="form-control" id="depoId" required="1">
 						<option value="">Select your depo name</option>
 						<?php echo $depoInfoData;?>
 					</select>
@@ -42,7 +48,7 @@
 			<div class="col-sm-5">
 				<div class="form-group">
 					<label for="proName">Product Name :</label>
-					<select name="proName" class="form-control selPorName" id="proId">
+					<select name="proName" class="form-control selPorName" id="proId" required="1">
 						<option value="">Select your product name</option>
 						<?php echo $proNameData;?>
 					</select>
@@ -57,7 +63,7 @@
 			<div class="col-sm-5">
 				<div class="form-group">
 					<label for="salesQuantity">Sales product Quantity (pcs) :</label>
-					<input type="text" name="salesQuantity" id="salesQuantity" class="form-control totaltaka" placeholder="Enter your today sales quantity">
+					<input type="text" name="salesQuantity" id="salesQuantity" class="form-control totaltaka" placeholder="Enter your today sales quantity" required="1">
 				</div>
 			</div>
 			<div class="col-sm-10 col-sm-offset-1">

@@ -4,7 +4,8 @@
 	require("../database.php");
 	include("../necessaryClass/user.php");
 	if(!$obj->userLoginId()){
-		echo"Not balance you";
+		$_SESSION['rpMsg']="<p class='alert alert-danger'>You are invalid user</p>";
+		header("Location:../index.php?page=depoTodaySales&folder=depoinfo");
 		exit();
 	}
 	$userLoginId=$obj->userLoginId();// Required userLogin Id
@@ -15,22 +16,28 @@
 	$totalTaka=$proUnitPrice*$salesQuantity;
 	$currentDate=date("Y-m-d");
 	$curTimeStr=strtotime($currentDate);
-	/*
+	$depoSalesUpdExe='';
+	$depoSalesInsExe='';
+	$totalDepoSalesUpdExe='';
+	$totalDepoSalesInsExe='';
+	if(!empty($depoNameId) && !empty($proNameId) && !empty($proUnitPrice) && !empty($salesQuantity)){
+		$db->beginTransaction();
 	// Depo store select for store Quantity minus Query 
 		$selStore=$db->prepare("SELECT * FROM depo_store WHERE pro_id=?");
 		$selStore->bindParam(1,$proNameId);
-		$storeSelExe=$selStore->execute();
+		$selStore->execute();
 		$storeRow=$selStore->fetch(PDO::FETCH_ASSOC);
 		$proStoreQuantity=$storeRow['pro_quantity'];
 		$storeTotalPrice=$storeRow['total_price'];
-		$updateQuantity=$proStoreQuantity-$salesQuantity; // $ Update Quantity
-		$upTotal_price=$storeTotalPrice-$totalTaka; // $ Update total Price in depo store
-	// Depo stroe update Query
+		$updateQuantity=$proStoreQuantity-$salesQuantity; //store Update Quantity variable
+		$upTotal_price=$storeTotalPrice-$totalTaka; // store Update total Price variable
+	// Depo stroe update Query mean product minus from this table
 		$updateStoreQuery=$db->prepare("UPDATE depo_store SET pro_quantity=?,total_price=? WHERE pro_id=?");
 		$updateStoreQuery->bindParam(1,$updateQuantity);
 		$updateStoreQuery->bindParam(2,$upTotal_price);
 		$updateStoreQuery->bindParam(3,$proNameId);
-		$storeUpExe=$updateStoreQuery->execute();
+		$updateStoreQuery->execute();
+		// Complete the depo store update with minus data
 
 	// Depo today_sales data select query
 		$depoTodaySalesQuery=$db->prepare("SELECT * FROM  depo_sales WHERE depo_id=? AND date_time=?");
@@ -59,8 +66,7 @@
 			$depoSalesUpQuery->bindParam(2,$upTotal_price);
 			$depoSalesUpQuery->bindParam(3,$existProductId);
 			$depoSalesUpQuery->bindParam(4,$currentDate);
-			$depoSalesUpQuery->execute();
-			echo"updateID & updateDate<br>";
+			$depoSalesUpdExe=$depoSalesUpQuery->execute();
 		}else{
 			// Depo today_sales table data insert Query 
 			$todaySalesInsert=$db->prepare("INSERT INTO depo_sales SET depo_id=?,pro_id=?,pro_price=?,quantity=?,total_price=?,date_time=?");
@@ -70,8 +76,7 @@
 			$todaySalesInsert->bindParam(4,$salesQuantity);
 			$todaySalesInsert->bindParam(5,$totalTaka);
 			$todaySalesInsert->bindParam(6,$currentDate);
-			$todaySalesInsert->execute();
-			echo"insertID & insertDate<br>";
+			$depoSalesInsExe=$todaySalesInsert->execute();
 		}
 
 	// select from depo sales/today sales for total sales table report
@@ -80,10 +85,12 @@
 		$depoSalesQuery->bindParam(2,$currentDate);
 		$depoSalesQuery->execute();
 		$depoTotalSales='';
+		$totalSalesQuantity='';
 		$depoId='';
 		$i=1;
 		while($row=$depoSalesQuery->fetch(PDO::FETCH_OBJ)){
 			$depoTotalSales+=$row->total_price;
+			$totalSalesQuantity+=$row->quantity;
 			$depoId=$row->depo_id;
 			$i++;
 		}
@@ -97,76 +104,40 @@
 
 		if($exist_depo_id){ // if Exist depo id in same date then execute update query else insert query
 			// Depo total sales update Query
-			$depoTotalSaleUp=$db->prepare("UPDATE depo_total_sales SET today_sales_tk=?,total_taka=? WHERE depo_id=? AND date_time=?");
-			$depoTotalSaleUp->bindParam(1,$depoTotalSales);
+			$depoTotalSaleUp=$db->prepare("UPDATE depo_total_sales SET depo_total_sales_quantity=?,today_sales_tk=? WHERE depo_id=? AND date_time=?");
+			$depoTotalSaleUp->bindParam(1,$totalSalesQuantity);
 			$depoTotalSaleUp->bindParam(2,$depoTotalSales);
 			$depoTotalSaleUp->bindParam(3,$exist_depo_id);
 			$depoTotalSaleUp->bindParam(4,$currentDate);
-			$depoTotalSaleUp->execute();
-			echo"update";	
+			$totalDepoSalesUpdExe=$depoTotalSaleUp->execute();	
 		}else{
 			// depo total sales insert query
-			$totalSalesInsert=$db->prepare("INSERT INTO depo_total_sales SET depo_id=?,today_sales_tk=?,total_taka=?,date_time=?");
+			$totalSalesInsert=$db->prepare("INSERT INTO depo_total_sales SET depo_id=?,depo_total_sales_quantity=?,today_sales_tk=?,date_time=?");
 			$totalSalesInsert->bindParam(1,$depoNameId);
-			$totalSalesInsert->bindParam(2,$depoTotalSales);
+			$totalSalesInsert->bindParam(2,$totalSalesQuantity);
 			$totalSalesInsert->bindParam(3,$depoTotalSales);
 			$totalSalesInsert->bindParam(4,$currentDate);
-			$totalSalesInsert->execute();
-			echo"Insert";	
+			$totalDepoSalesInsExe=$totalSalesInsert->execute();	
 		}
-	*/	
-	// Select total_sales tabale data for balance table data insert & update Query
-		$selTotal_sales=$db->prepare("SELECT depo_total_sales.*,depo_total_sales.id AS totalSalesId FROM depo_total_sales LEFT JOIN depo ON depo_total_sales.id=depo.id WHERE depo_total_sales.depo_id=? AND depo_total_sales.date_time=?");
-		$selTotal_sales->bindParam(1,$depoNameId);
-		$selTotal_sales->bindParam(2,$currentDate);
-		$selTotal_sales->execute();
-		$totalSalesRow=$selTotal_sales->fetch(PDO::FETCH_ASSOC);
-		$depoTotalSalesId=$totalSalesRow['totalSalesId'];
-		$depoTotalSalesTaka=$totalSalesRow['total_taka'];
-	// Select Total warranty table data for balance table data insert & update
-		$selectTotalWar=$db->prepare("SELECT total_warranty.*,total_warranty.id AS totalWarTblId,depo.id AS warDepoid FROM total_warranty LEFT JOIN depo ON total_warranty.depo_id=depo.id WHERE total_warranty.depo_id=? AND total_warranty.warranty_date=?");
-		$selectTotalWar->bindParam(1,$depoNameId);
-		$selectTotalWar->bindParam(2,$currentDate);
-		$selectTotalWar->execute();
-		$totalWarRow=$selectTotalWar->fetch(PDO::FETCH_ASSOC);
-		$totalWarId=$totalWarRow['totalWarTblId'];
-		$totalWarTaka=$totalWarRow['total_warranty_tk'];
-		$netBalance=$depoTotalSalesTaka-$totalWarTaka;
-	// Balance selecet 
-		$balSelQuery=$db->prepare("SELECT * FROM balance WHERE total_sales_id=? AND total_warranty_id=? AND bal_date=?");
-		$balSelQuery->bindParam(1,$depoTotalSalesId);
-		$balSelQuery->bindParam(2,$totalWarId);
-		$balSelQuery->bindParam(3,$currentDate);
-		$balSelQuery->execute();
-		$balSelRow=$balSelQuery->fetch(PDO::FETCH_ASSOC);
-		$existBalSalesId=$balSelRow['total_sales_id'];
-		$existBalTotalWarId=$balSelRow['total_warranty_id'];
-		$existBalDate=$balSelRow['bal_date'];
-		$strBalDate=strtotime($existBalDate);
-		if($existBalSalesId==$depoTotalSalesId && $existBalTotalWarId==$totalWarId && $strBalDate==$curTimeStr){
-			// Balance Update Query
-			echo"nice work";
-			$updateBalQuery=$db->prepare("UPDATE balance SET total_sales_taka=?,total_war_taka=?,net_balance=? WHERE total_sales_id=? AND total_warranty_id=? AND bal_date=?");
-			$updateBalQuery->bindParam(1,$depoTotalSalesTaka);
-			$updateBalQuery->bindParam(2,$totalWarTaka);
-			$updateBalQuery->bindParam(3,$netBalance);
-			$updateBalQuery->bindParam(4,$depoTotalSalesId);
-			$updateBalQuery->bindParam(5,$totalWarId);
-			$updateBalQuery->bindParam(6,$strBalDate);
-			$updateBalQuery->execute();
-			echo"Update";
+		if($depoSalesUpdExe && $totalDepoSalesUpdExe OR $totalDepoSalesInsExe){
+			$db->commit();
+			$_SESSION['rpMsg']="<p class='alert alert-success'>Query has been successful</p>";
+			header("Location:../index.php?page=depoTodaySales&folder=depoinfo");
+		}elseif($depoSalesInsExe && $totalDepoSalesUpdExe OR $totalDepoSalesInsExe){
+			$db->commit();
+			$_SESSION['rpMsg']="<p class='alert alert-success'>Query has been successful</p>";
+			header("Location:../index.php?page=depoTodaySales&folder=depoinfo");
 		}else{
-			// Balance insert & Update
-			$balInsert=$db->prepare("INSERT INTO balance SET total_sales_id=?,total_sales_taka=?,total_warranty_id=?,total_war_taka=?,net_balance=?,bal_date=?");
-			$balInsert->bindParam(1,$depoTotalSalesId);
-			$balInsert->bindParam(2,$depoTotalSalesTaka);
-			$balInsert->bindParam(3,$totalWarId);
-			$balInsert->bindParam(4,$totalWarTaka);
-			$balInsert->bindParam(5,$netBalance);
-			$balInsert->bindParam(6,$currentDate);
-			$balInsert->execute();
-			echo"Insert";
+			$db->rollback();
+			$_SESSION['rpMsg']="<p class='alert alert-danger'>Failed your query !</p>";
+			header("Location:../index.php?page=depoTodaySales&folder=depoinfo");
 		}
-		
+	}else{
+		$_SESSION['rpMsg']="<p class='alert alert-warning'>Please fill up all fields !</p>";
+		header("Location:../index.php?page=depoTodaySales&folder=depoinfo");
+	}
+	
+	
+	
 		
 ?>

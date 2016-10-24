@@ -25,6 +25,12 @@
 		<div class="col-sm-10 col-sm-offset-1">
 			<h3 class="text-center text-green">Enter your replacement product</h3>
 			<hr>
+			<?php
+				if(isset($_SESSION['rplsMsg'])){
+					echo $_SESSION['rplsMsg'];
+					unset($_SESSION['rplsMsg']);
+				}
+			?>
 		</div>
 	</div>
 	<div class="row">
@@ -33,7 +39,7 @@
 				<div class="col-sm-5 col-sm-offset-1">
 					<div class="form-group">
 						<label for="depo">Depo Name :</label>
-						<select name="depoName" class="form-control" id="depoId">
+						<select name="depoName" class="form-control" id="depoId" required="1">
 							<option value="">Select your depo name</option>
 							<?php echo $depoInfoData;?>
 						</select>
@@ -42,7 +48,7 @@
 				<div class="col-sm-5">
 					<div class="form-group">
 						<label for="proName">Product Name :</label>
-						<select name="proName" class="form-control" id="proId">
+						<select name="proName" class="form-control" id="proId" required="1">
 							<option value="">Select your product name</option>
 							<?php echo $proNameData;?>
 						</select>
@@ -57,7 +63,7 @@
 				<div class="col-sm-5">
 					<div class="form-group">
 						<label for="repQuantity">Replace quantity :</label>
-						<input type="text" name="repQuantity" class="form-control" id="repQuantity" placeholder="Enter your replacement quantity">
+						<input type="text" name="repQuantity" class="form-control" id="repQuantity" placeholder="Enter your replacement quantity" required="1">
 					</div>
 				</div>
 				<div class="col-sm-10 col-sm-offset-1">
