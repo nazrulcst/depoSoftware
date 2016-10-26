@@ -33,14 +33,15 @@
 		            </span>
 		          </a>
 		          <ul class="treeview-menu">
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='categorySetup')? 'active':null;?>"><a href="index.php?page=categorySetup&folder=setup"><i class="fa fa-circle-o"></i>Category Setup</a></li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='categorySetup')? 'active':null;?>"><a href="index.php?page=categorySetup&folder=setup"><i class="fa fa-circle-o"></i>Create new category</a></li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='createPackageName')? 'active':null;?>"><a href="index.php?page=createPackageName&folder=setup"><i class="fa fa-circle-o"></i>Create new offer</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='userCreateSetup')? 'active':null;?>"><a href="index.php?page=userCreateSetup&folder=setup"><i class="fa fa-circle-o"></i>Create new user</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlluser')? 'active':null;?>"><a href="index.php?page=viewAlluser&folder=setup"><i class="fa fa-circle-o"></i>All user list</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlldepoList')? 'active':null;?>"><a href="index.php?page=viewAlldepoList&folder=setup"><i class="fa fa-circle-o"></i>All depo list</a>
 		            </li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='totalWarrantyView')? 'active':null;?>"><a href="index.php?page=totalWarrantyView&folder=setup"><i class="fa fa-circle-o"></i>All replaced product</a>
 		            </li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlltotalBalance')?'active':null;?>"><a href="index.php?page=viewAlltotalBalance&folder=setup">
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='dailyBalanceSetup')?'active':null;?>"><a href="index.php?page=dailyBalanceSetup&folder=setup">
 		            	<i class="fa fa-circle-o"></i>Daily balance chart
 		            </a>
 		            	
@@ -65,6 +66,7 @@
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoView')? 'active':null;?>"><a href="index.php?page=depoView&folder=depoinfo"><i class="fa fa-circle-o"></i>View your depo</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoStoreSetup')? 'active':null;?>"><a href="index.php?page=depoStoreSetup&folder=depoinfo"><i class="fa fa-circle-o"></i>Depo Store</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoTodaySales')? 'active':null;?>"><a href="index.php?page=depoTodaySales&folder=depoinfo"><i class="fa fa-circle-o"></i>Today sales add</a></li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='packageSetup')? 'active':null;?>"><a href="index.php?page=packageSetup&folder=depoinfo"><i class="fa fa-circle-o"></i>Add package sales</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewDepoTotalSales')? 'active':null;?>"><a href="index.php?page=viewDepoTotalSales&folder=depoinfo"><i class="fa fa-circle-o"></i>View all sales</a></li>
 		          </ul>
 		        </li>

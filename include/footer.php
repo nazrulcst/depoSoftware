@@ -2,7 +2,7 @@
 		    <div class="pull-right hidden-xs">
 		      <p>Developer(-_-Nazrul Islam</p> 
 		    </div>
-		    <strong>Copyright &copy; 2016-2017 <a href="nazrul.com.bd">Bright-Telecom</a>.</strong> All rights
+		    <strong>Copyright &copy;<?php echo date('Y');?> <a href="nazrul.com.bd">Bright-Telecom</a>.</strong> All rights
 		    reserved.
 		  </footer><!--/End footer-->
 		</div><!-- /wrapper -->
