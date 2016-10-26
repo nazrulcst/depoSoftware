@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2016 at 01:47 PM
+-- Generation Time: Oct 26, 2016 at 05:25 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -267,14 +267,29 @@ CREATE TABLE `notification` (
 
 CREATE TABLE `package` (
   `id` int(11) NOT NULL,
-  `pro_id` int(11) NOT NULL,
-  `pro_name` varchar(30) NOT NULL,
-  `pro_price` int(6) NOT NULL,
-  `quantity` int(6) NOT NULL,
-  `total_package` int(4) NOT NULL,
-  `package_price` int(8) NOT NULL,
   `total_price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pack_name`
+--
+
+CREATE TABLE `pack_name` (
+  `id` int(11) NOT NULL,
+  `package_name` varchar(35) NOT NULL,
+  `percentage` int(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `pack_name`
+--
+
+INSERT INTO `pack_name` (`id`, `package_name`, `percentage`) VALUES
+(3, '24 pcs', 15),
+(4, '72 pcs', 25),
+(5, '500 pcs', 35);
 
 -- --------------------------------------------------------
 
@@ -479,8 +494,13 @@ ALTER TABLE `notification`
 -- Indexes for table `package`
 --
 ALTER TABLE `package`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pro_id` (`pro_id`);
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pack_name`
+--
+ALTER TABLE `pack_name`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `products`
@@ -543,7 +563,7 @@ ALTER TABLE `depo`
 -- AUTO_INCREMENT for table `depo_sales`
 --
 ALTER TABLE `depo_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `depo_store`
 --
@@ -584,6 +604,11 @@ ALTER TABLE `notification`
 --
 ALTER TABLE `package`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `pack_name`
+--
+ALTER TABLE `pack_name`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `products`
 --
@@ -657,12 +682,6 @@ ALTER TABLE `due_pay`
 --
 ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `package`
---
-ALTER TABLE `package`
-  ADD CONSTRAINT `package_ibfk_2` FOREIGN KEY (`pro_id`) REFERENCES `products` (`id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `products`

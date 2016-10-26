@@ -3,11 +3,17 @@
 		<div class="col-sm-10 col-sm-offset-1">
 			<h3 class="text-center text-green">Create new package offer</h3>
 			<hr>
+			<?php
+				if(isset($_SESSION['offMsg'])){
+					echo $_SESSION['offMsg'];
+					unset($_SESSION['offMsg']);
+				}
+			?>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm-10 col-sm-offset-1">
-			<form accept="" method="">
+			<form action="action/createOfferNameAction.php" method="post">
 				<div class="col-sm-8 col-sm-offset-2">
 					<div class="form-group">
 						<label for="packageName">Package Name :</label>

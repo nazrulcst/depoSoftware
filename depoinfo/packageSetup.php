@@ -1,3 +1,25 @@
+<?php
+	require('database.php');
+	$proName=$db->prepare("SELECT * FROM products");
+	$proName->execute();
+	$sl='';
+	$data='';
+	while($proNameRow=$proName->fetch(PDO::FETCH_OBJ)){
+		$sl++;
+		$data.="
+			<option value='$proNameRow->id'>$proNameRow->pro_name</option>
+		";
+	}
+	$offerSel=$db->prepare("SELECT * FROM pack_name");
+	$offerSel->execute();
+	$icr='';
+	$offData='';
+	while($offRow=$offerSel->fetch(PDO::FETCH_OBJ)){
+		$offData.="
+			<option value='$offRow->package_name'>$offRow->package_name</option>
+		";
+	}
+?>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-10">
@@ -12,8 +34,8 @@
 					<div class="form-group">
 						<label for="productName">Product Name :</label>
 						<select name="productName" id="productName" class="form-control">
-							<option>Choice your product</option>
-
+							<option>Select your product</option>
+							<?php echo $data;?>	
 						</select>
 					</div>
 				</div>
@@ -21,10 +43,8 @@
 					<div class="form-group">
 						<label for="packageName">Package Name :</label>
 						<select name="packageName" id="packageName" class="form-control">
-							<option>Choice your package</option>
-							<option value="24 %">Lowest offer</option>	
-							<option value="72 %">Middle offer</option>	
-							<option value="500 %">Largest offer</option>	
+							<option>Select your package</option>
+							<?php echo $offData;?>	
 						</select>
 					</div>
 					</div>
