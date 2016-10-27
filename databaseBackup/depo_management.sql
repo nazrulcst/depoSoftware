@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2016 at 05:25 PM
+-- Generation Time: Oct 27, 2016 at 02:47 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -130,9 +130,9 @@ CREATE TABLE `depo_store` (
 --
 
 INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`, `total_price`, `store_date`) VALUES
-(1, 12, 19, -9, 120, -1080, '2016-10-24'),
-(2, 12, 21, -32, 120, -3840, '2016-10-24'),
-(3, 12, 20, 5, 300, 1500, '2016-10-24');
+(3, 12, 20, -235, 300, -70500, '2016-10-24'),
+(4, 12, 19, -140, 120, -16800, '2016-10-27'),
+(9, 12, 22, 60, 500, 30000, '2016-10-27');
 
 -- --------------------------------------------------------
 
@@ -267,8 +267,22 @@ CREATE TABLE `notification` (
 
 CREATE TABLE `package` (
   `id` int(11) NOT NULL,
-  `total_price` int(11) NOT NULL
+  `depo_id` int(11) NOT NULL,
+  `pack_name_id` int(11) NOT NULL,
+  `total_item` int(11) NOT NULL,
+  `percentageOff` int(11) NOT NULL,
+  `total_sales_taka` int(11) NOT NULL,
+  `package_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `package`
+--
+
+INSERT INTO `package` (`id`, `depo_id`, `pack_name_id`, `total_item`, `percentageOff`, `total_sales_taka`, `package_date`) VALUES
+(2, 12, 3, 10, 15, 450, '2016-10-27'),
+(3, 12, 3, 0, 15, 0, '2016-10-27'),
+(4, 12, 3, 10, 15, 450, '2016-10-27');
 
 -- --------------------------------------------------------
 
@@ -289,7 +303,7 @@ CREATE TABLE `pack_name` (
 INSERT INTO `pack_name` (`id`, `package_name`, `percentage`) VALUES
 (3, '24 pcs', 15),
 (4, '72 pcs', 25),
-(5, '500 pcs', 35);
+(6, '500 pcs', 35);
 
 -- --------------------------------------------------------
 
@@ -314,10 +328,10 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `user_id`, `cat_id`, `pro_name`, `pro_price`, `quantity`, `total_price`, `uploader`, `entry_date`) VALUES
-(19, 4, 20, 'Bags', 120, 500, 60000, 'admin', '2016-10-22'),
-(20, 4, 21, 'mouse', 300, 90, 27000, 'admin', '2016-10-22'),
-(21, 4, 27, 'notes', 120, 12, 1440, 'admin', '2016-10-22'),
-(22, 4, 25, 'nazrul', 500, 200, 100000, 'admin', '2016-09-14');
+(19, 4, 20, 'Bags', 120, 142, 17040, 'admin', '2016-10-22'),
+(20, 4, 21, 'mouse', 300, 216, 300, 'admin', '2016-10-22'),
+(21, 4, 27, 'notes', 120, 216, 120, 'admin', '2016-10-22'),
+(22, 4, 25, 'nazrul', 500, 140, 70000, 'admin', '2016-09-14');
 
 -- --------------------------------------------------------
 
@@ -494,7 +508,11 @@ ALTER TABLE `notification`
 -- Indexes for table `package`
 --
 ALTER TABLE `package`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pack_name_id` (`pack_name_id`),
+  ADD KEY `pack_name_id_2` (`pack_name_id`),
+  ADD KEY `pack_name_id_3` (`pack_name_id`),
+  ADD KEY `depo_id` (`depo_id`);
 
 --
 -- Indexes for table `pack_name`
@@ -568,7 +586,7 @@ ALTER TABLE `depo_sales`
 -- AUTO_INCREMENT for table `depo_store`
 --
 ALTER TABLE `depo_store`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `depo_total_sales`
 --
@@ -603,12 +621,12 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `pack_name`
 --
 ALTER TABLE `pack_name`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `products`
 --
@@ -682,6 +700,13 @@ ALTER TABLE `due_pay`
 --
 ALTER TABLE `message`
   ADD CONSTRAINT `message_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `package`
+--
+ALTER TABLE `package`
+  ADD CONSTRAINT `package_ibfk_1` FOREIGN KEY (`pack_name_id`) REFERENCES `pack_name` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `package_ibfk_2` FOREIGN KEY (`depo_id`) REFERENCES `depo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `products`

@@ -6,7 +6,6 @@
 	$input='';
 	while($proNameRow=$proName->fetch(PDO::FETCH_OBJ)){
 		$sl++;
-		
 		$input.="
 			$proNameRow->proName : <input type='checkbox' name='productName[]' value='$proNameRow->deopStoreId'><br>
 			<input type='text' name='proQuantity[]' placeholder='Enter your quantity'>&nbsp;&nbsp;&nbsp;Pcs<br>
@@ -28,6 +27,12 @@
 		<div class="col-sm-10 col-sm-offset-1">
 			<h3 class="text-center text-green">Add today package sales</h3>
 			<hr>
+			<?php
+				if(isset($_SESSION['packMsg'])){
+					echo $_SESSION['packMsg'];
+					unset($_SESSION['packMsg']);
+				}
+			?>
 		</div>
 	</div>
 	<div class="row">

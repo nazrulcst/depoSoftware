@@ -11,6 +11,7 @@
 	$upQuantity=$ProQuantity-$entQuantity;// update quantity for pruduct table
 	$updatePrice=$proUnitPrice*$upQuantity;// update total price for pruduct table
 	$currentDate=date("Y-m-d");
+	$currentDateStr=strtotime($currentDate);
 	if($ProQuantity>=$entQuantity){ // Checking the suficient Quantity
 		//depo store update query
 		$proNameFromstore=$db->prepare("SELECT depo_store.*,depo_store.id AS depoStoreId,products.pro_name AS productName FROM depo_store LEFT JOIN products ON depo_store.pro_id=products.id LEFT JOIN depo ON depo_store.depo_id=depo.id WHERE depo_store.pro_id=?");
@@ -23,15 +24,17 @@
 		$updateQuantity=$entQuantity+$depoStoreProQuantity;// update quantity for depo store table
 		$upTotalPrice=$updateQuantity*$proUnitPrice; // update total price ofr depo store table
 		$existDate=$fetchDepoStoreId['store_date'];
+		$strExistDate=strtotime($existDate);
 
 		if(!empty($depoId) && !empty($proId) && !empty($entQuantity)){
 			$db->beginTransaction();//Begin Transaction  connect and start
 		
-			if($proId===$depoStoreUpdateId && $existDate===$currentDate){// Depo Store update Query
-				$soreUpdate=$db->prepare("UPDATE depo_store SET pro_quantity=?,total_price=? WHERE id=?");
+			if($proId==$depoStoreUpdateId && $strExistDate==$currentDateStr){// Depo Store update Query
+				$soreUpdate=$db->prepare("UPDATE depo_store SET pro_quantity=?,total_price=? WHERE id=? AND store_date=?");
 				$soreUpdate->bindParam(1,$updateQuantity);
 				$soreUpdate->bindParam(2,$upTotalPrice);
 				$soreUpdate->bindParam(3,$depoStoreId);
+				$soreUpdate->bindParam(4,$existDate);
 				$storeUpExe=$soreUpdate->execute();
 			}else{// Depo Store insert Query
 				$storeInsertQuery=$db->prepare("INSERT INTO depo_store SET depo_id=?,pro_id=?,pro_quantity=?,pro_price=?,total_price=?,store_date=?");
