@@ -3,32 +3,44 @@
 	require('../database.php');
 	$productNameId=$_POST['productName'];
 	$productQuantity=$_POST['proQuantity'];
-	echo"<pre>";
+	$totalTaka='';
+	$totalQuantity='';
+	$enterTotalQuantity='';
+	foreach($productNameId as $value){
+			$proname=$db->prepare("SELECT * FROM depo_store WHERE id=?");
+			$proname->bindParam(1,$value);
+			$proname->execute();
+			$row=$proname->fetch(PDO::FETCH_OBJ);
+			$totalTaka+=$row->pro_price; 
+			$totalQuantity+=$row->quantity;
+		
+	}
+
+
+foreach($productQuantity as $quantityValue){
+	$updateProduct=$db->prepare("UPDATE products SET quantity=?,total_price=? WHERE id=?");
+
+}
+
+
+
+	echo $totalTaka;
+	
+	
 
 	
-	$info = array('coffee', 'brown', 'caffeine');
-
-	// Listing all the variables
-	list($drink, $color, $power) = $info;
-	echo "$drink is $color and $power makes it special.\n";
-	echo"<hr>";
-	$packageName=$_POST['packageName'];
 	
-	// package offer selection
-	$packageSel=$db->prepare("SELECT * FROM pack_name WHERE package_name=?");
-	$packageSel->bindParam(1,$packageName);
-	$packageSel->execute();
-	$packageRow=$packageSel->fetch(PDO::FETCH_OBJ);
-	echo"<br>";
-	echo $percent=$packageRow->percentage;
-	// product price select query for percentage sales
-	$productPriceSel=$db->prepare("SELECT * FROM products WHERE id=?");
-	$productPriceSel->bindParam(1,$productNameId);
-	$productPriceSel->execute();
-	$priceRow=$productPriceSel->fetch(PDO::FETCH_OBJ);
-	$proUnitPrice=$priceRow->pro_price;
-	$totalPackagePrice=$proUnitPrice*$packageName;
-	$totalPrice=($totalPackagePrice*$percent)/100;
+	
+
+
+
+
+
+
+
+
+	
+	//$totalPrice=($totalPackagePrice*$percent)/100;
 
 
 ?>

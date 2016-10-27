@@ -1,6 +1,6 @@
 <?php
 	require('database.php');
-	$proName=$db->prepare("SELECT * FROM products");
+	$proName=$db->prepare("SELECT depo_store.*,depo_store.id AS deopStoreId,depo.id AS depoId, products.pro_name AS proName FROM depo_store LEFT JOIN depo ON depo_store.depo_id=depo.id LEFT JOIN products ON depo_store.pro_id=products.id");
 	$proName->execute();
 	$sl='';
 	$input='';
@@ -8,7 +8,7 @@
 		$sl++;
 		
 		$input.="
-			$proNameRow->pro_name : <input type='checkbox' name='productName[]' value='$proNameRow->pro_name'><br>
+			$proNameRow->proName : <input type='checkbox' name='productName[]' value='$proNameRow->deopStoreId'><br>
 			<input type='text' name='proQuantity[]' placeholder='Enter your quantity'>&nbsp;&nbsp;&nbsp;Pcs<br>
 		";
 	}
