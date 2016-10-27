@@ -48,9 +48,15 @@
 			$total_sales_quantity=$salesRow['depo_total_sales_quantity'];
 			$total_sales_taka+=$salesRow['today_sales_tk'];
 		}
+	// select package all data for final balance table
+		$totalPackageSel=$db->prepare("SELECT * FROM package WHERE package_date >=DATE_SUB(CURRENT_DATE,INTERVAL DAYOFMONTH(CURRENT_DATE)-1 DAY) AND package_date <=LAST_DAY(CURRENT_DATE)");
+		$totalPackageSel->execute();
+		$packageRow=$totalPackageSel->fetch(PDO::FETCH_ASSOC);
+		$totalPackageQuantity=$packageRow['total_item'];	
+		$totalPackageTaka=$packageRow['total_sales_taka'];	
 	// Insert final balance table data Query
-		$curentMonthTotalCost=$total_sales_taka+$proTotalTakaPerMonth;//full month taka
-		$currentMonthTotalQuantity=$proTotalQuantityPerMonth+$total_sales_quantity;//full month Quantity
+		$curentMonthTotalCost=$total_sales_taka+$proTotalTakaPerMonth+$totalPackageTaka;//full month taka
+		$currentMonthTotalQuantity=$proTotalQuantityPerMonth+$total_sales_quantity+$totalPackageQuantity;//full month Quantity
 		$totalProtif=$curentMonthTotalCost-$total_pricePerMonth;//full month loss
 		// Checking the condition
 		if($curDate==$last_day_of_month){
@@ -71,7 +77,7 @@
 			$_SESSION['fbal']="<p class='alert alert-warning'>Don't match date !</p>";
 		}	
 
-		// select final table data for showing
+		// select final table data for view all final balance
 		$selFinalBal=$db->prepare("SELECT * FROM final_balance");
 		$selFinalBal->execute();
 		$sl='';

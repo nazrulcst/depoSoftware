@@ -14,12 +14,14 @@
 	$packageName=$_POST['packageName'];
 	$curDate=date('Y-m-d');
 	$curStrDate=strtotime($curDate);
-
 	$existTotalProTaka='';
 	$updateQuantity='';
 	$packagePrice='';
 	$packageQuantity='';
-	//if(!empty($packageName) && !empty($depoStoreId) && !empty($productQuantity)){
+	$updatePackExe='';
+	$packInsertExe='';
+	if(!empty($packageName) && !empty($depoStoreId) && !empty($productQuantity)){
+		$db->beginTransaction();// Transaction start
 		foreach($depoStoreId as $key=>$value){
 			$depoStore=$db->prepare("SELECT * FROM depo_store WHERE id=?");
 			$depoStore->bindParam(1,$value);
@@ -60,13 +62,19 @@
 		$existPackNameId=$rowPackage['pack_name_id'];
 		$existPackDate=$rowPackage['package_date'];
 		$strPackExistDate=strtotime($existPackDate);
+		$existTotalItem=$rowPackage['total_item'];
+		$existTotalTaka=$rowPackage['total_sales_taka'];
+		$updateTotalItem=$existTotalItem+$packageQuantity;// update totalITem Varia
+		$updateTotalTaka=$existTotalTaka+$packagePrice;
+
 		if($existPackNameId==$packNameId && $strPackExistDate==$curStrDate){
 			// package table data update
 			$packageUpdate=$db->prepare("UPDATE package SET total_item=?,total_sales_taka=? WHERE pack_name_id=? AND package_date=?");
-			$packageUpdate->bindParam(1,);
-			$packageUpdate->bindParam(2,);
-			$packageUpdate->bindParam(3,);
-			$packageUpdate->bindParam(4,);
+			$packageUpdate->bindParam(1,$updateTotalItem);
+			$packageUpdate->bindParam(2,$updateTotalTaka);
+			$packageUpdate->bindParam(3,$packNameId);
+			$packageUpdate->bindParam(4,$curDate);
+			$updatePackExe=$packageUpdate->execute();
 		}else{
 			// package table data insert	
 			$totalSalesTaka=($packNamePercentage/100)*$packagePrice;
@@ -80,13 +88,16 @@
 			$packInsertExe=$packageInsert->execute();
 		}
 	
-
-
-		/*
-		if($packageInsert->execute()){
-			$_SESSION['packMsg']="<p class='alert alert-success'>Success</p>";
+		if($updatePackExe){
+			$db->commit();
+			$_SESSION['packMsg']="<p class='alert alert-success'>Update Success</p>";
+			header("Location:../index.php?page=packageSetup&folder=depoinfo");
+		}elseif($packInsertExe){
+			$db->commit();
+			$_SESSION['packMsg']="<p class='alert alert-success'>Insert Success</p>";
 			header("Location:../index.php?page=packageSetup&folder=depoinfo");
 		}else{
+			$db->rollback();
 			$_SESSION['packMsg']="<p class='alert alert-danger'>Failed!</p>";
 			header("Location:../index.php?page=packageSetup&folder=depoinfo");
 		}
@@ -94,14 +105,5 @@
 		$_SESSION['packMsg']="<p class='alert alert-danger'>Please enter your package name</p>";
 		header("Location:../index.php?page=packageSetup&folder=depoinfo");
 	}
-	
-	*/
-
-
-
-
-
-	
-
 
 ?>
