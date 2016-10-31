@@ -55,8 +55,9 @@
 		$packNameId=$pack_NameRow->id;
 		$packNamePercentage=$pack_NameRow->percentage;
 	// select all data from package
-		$selectPackage=$db->prepare("SELECT * FROM package WHERE pack_name_id=?");
+		$selectPackage=$db->prepare("SELECT * FROM package WHERE pack_name_id=? AND package_date=?");
 		$selectPackage->bindParam(1,$packNameId);
+		$selectPackage->bindParam(2,$curDate);
 		$selectPackage->execute();
 		$rowPackage=$selectPackage->fetch(PDO::FETCH_ASSOC);
 		$existPackNameId=$rowPackage['pack_name_id'];
@@ -65,15 +66,17 @@
 		$existTotalItem=$rowPackage['total_item'];
 		$existTotalTaka=$rowPackage['total_sales_taka'];
 		$updateTotalItem=$existTotalItem+$packageQuantity;// update totalITem Varia
-		$updateTotalTaka=$existTotalTaka+$packagePrice;
+		$totalSalesTaka=($packNamePercentage/100)*$packagePrice;
+		$updateTotalTaka=$existTotalTaka+$totalSalesTaka;
 
 		if($existPackNameId==$packNameId && $strPackExistDate==$curStrDate){
 			// package table data update
-			$packageUpdate=$db->prepare("UPDATE package SET total_item=?,total_sales_taka=? WHERE pack_name_id=? AND package_date=?");
+			$packageUpdate=$db->prepare("UPDATE package SET total_item=?,total_sales_taka=? WHERE depo_id=? AND pack_name_id=? AND package_date=?");
 			$packageUpdate->bindParam(1,$updateTotalItem);
 			$packageUpdate->bindParam(2,$updateTotalTaka);
-			$packageUpdate->bindParam(3,$packNameId);
-			$packageUpdate->bindParam(4,$curDate);
+			$packageUpdate->bindParam(3,$depId);
+			$packageUpdate->bindParam(4,$packNameId);
+			$packageUpdate->bindParam(5,$curDate);
 			$updatePackExe=$packageUpdate->execute();
 		}else{
 			// package table data insert	

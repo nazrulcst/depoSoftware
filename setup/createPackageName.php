@@ -17,13 +17,13 @@
 				<div class="col-sm-8 col-sm-offset-2">
 					<div class="form-group">
 						<label for="packageName">Package Name :</label>
-						<input type="text" name="packageName" id="packageName" placeholder="Enter package name" class="form-control">
+						<input type="text" name="packageName" id="packageName" placeholder="Enter package name" class="form-control" required="1">
 					</div>
 				</div>
 				<div class="col-sm-8 col-sm-offset-2">
 					<div class="form-group">
 						<label for="percentage">Percentage Off :</label>
-						<input type="number" name="percentage" id="percentage" placeholder="Enter a value without %" class="form-control">
+						<input type="number" name="percentage" id="percentage" placeholder="Enter a value without %" class="form-control" required="1">
 					</div>
 				</div>
 				<div class="col-sm-8 col-sm-offset-2">

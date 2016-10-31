@@ -1,5 +1,6 @@
 <?php
 require('database.php');
+include_once('necessaryClass/user.php');
 $userId=$_SESSION['userId'];
 $userNameSelect=$db->prepare("SELECT * FROM `user` WHERE id=?");
 $userNameSelect->bindParam(1,$userId);

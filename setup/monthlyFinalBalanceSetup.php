@@ -58,24 +58,50 @@
 		$curentMonthTotalCost=$total_sales_taka+$proTotalTakaPerMonth+$totalPackageTaka;//full month taka
 		$currentMonthTotalQuantity=$proTotalQuantityPerMonth+$total_sales_quantity+$totalPackageQuantity;//full month Quantity
 		$totalProtif=$curentMonthTotalCost-$total_pricePerMonth;//full month loss
+	//Select final balance table data
+		$finalBalSel=$db->prepare("SELECT * FROM final_balance WHERE final_bal_date=?");
+		$finalBalSel->bindParam(1,$curDate);
+		$finalBalSel->execute();
+		$finalBalRow=$finalBalSel->fetch(PDO::FETCH_ASSOC);
+		$existFinalBalDate=$finalBalRow['final_bal_date'];
+		$existFinalBalId=$finalBalRow['id'];
+		$existFinalDateStr=strtotime($existFinalBalDate);
 		// Checking the condition
 		if($curDate==$last_day_of_month){
-			$insert=$db->prepare("INSERT INTO final_balance SET total_pro_quantity=?,total_pro_taka=?,total_sales_quantity=?,total_sales_taka=?,total_damage_quantity=?,total_damage_tk=?,month_total_quantity=?,month_total_cost=?,total_profit=?,final_bal_date=?");
-			$insert->bindParam(1,$proTotalQuantityPerMonth);
-			$insert->bindParam(2,$proTotalTakaPerMonth);
-			$insert->bindParam(3,$total_sales_quantity);
-			$insert->bindParam(4,$total_sales_taka);
-			$insert->bindParam(5,$quantityPermonth);
-			$insert->bindParam(6,$total_pricePerMonth);
-			$insert->bindParam(7,$currentMonthTotalQuantity);
-			$insert->bindParam(8,$curentMonthTotalCost);
-			$insert->bindParam(9,$totalProtif);
-			$insert->bindParam(10,$curDate);
-			$insert->execute();
-			$_SESSION['fbal']="<p class='alert alert-success'>Update your balance information</p>";
+			if($existFinalDateStr==$strcurDate){
+				$update=$db->prepare("UPDATE final_balance SET total_pro_quantity=?,total_pro_taka=?,total_sales_quantity=?,total_sales_taka=?,total_damage_quantity=?,total_damage_tk=?,month_total_quantity=?,month_total_cost=?,total_profit=? WHERE final_bal_date=?");
+				$update->bindParam(1,$proTotalQuantityPerMonth);
+				$update->bindParam(2,$proTotalTakaPerMonth);
+				$update->bindParam(3,$total_sales_quantity);
+				$update->bindParam(4,$total_sales_taka);
+				$update->bindParam(5,$quantityPermonth);
+				$update->bindParam(6,$total_pricePerMonth);
+				$update->bindParam(7,$currentMonthTotalQuantity);
+				$update->bindParam(8,$curentMonthTotalCost);
+				$update->bindParam(9,$totalProtif);
+				$update->bindParam(10,$curDate);
+				$update->execute();
+				$_SESSION['fbal']="<p class='alert alert-success'>Update your balance information</p>";
+			}else{
+				$insert=$db->prepare("INSERT INTO final_balance SET total_pro_quantity=?,total_pro_taka=?,total_sales_quantity=?,total_sales_taka=?,total_damage_quantity=?,total_damage_tk=?,month_total_quantity=?,month_total_cost=?,total_profit=?,final_bal_date=?");
+				$insert->bindParam(1,$proTotalQuantityPerMonth);
+				$insert->bindParam(2,$proTotalTakaPerMonth);
+				$insert->bindParam(3,$total_sales_quantity);
+				$insert->bindParam(4,$total_sales_taka);
+				$insert->bindParam(5,$quantityPermonth);
+				$insert->bindParam(6,$total_pricePerMonth);
+				$insert->bindParam(7,$currentMonthTotalQuantity);
+				$insert->bindParam(8,$curentMonthTotalCost);
+				$insert->bindParam(9,$totalProtif);
+				$insert->bindParam(10,$curDate);
+				$insert->execute();
+				$_SESSION['fbal']="<p class='alert alert-success'>Update your balance information</p>";
+			}	
 		}else{
 			$_SESSION['fbal']="<p class='alert alert-warning'>Don't match date !</p>";
-		}	
+		}
+		
+		
 
 		// select final table data for view all final balance
 		$selFinalBal=$db->prepare("SELECT * FROM final_balance");
@@ -121,14 +147,14 @@
 			<table class="table table-hover table-bordered table-striped table-condensend">
 				<thead class="text-green">
 					<th>Sl</th>
-					<th>proQuantity</th>
-					<th>proPrice</th>
-					<th>TotalSalseQuan</th>
-					<th>TotalSalseTaka</th>
-					<th>DamageQuan</th>
-					<th>DamageTaka</th>
-					<th>MonthlyQuan</th>
-					<th>MonthlyTaka</th>
+					<th>Stock pcs</th>
+					<th>Stock price</th>
+					<th>Total sales pcs</th>
+					<th>Total sales tk</th>
+					<th>Damage pcs</th>
+					<th>Damage Tk</th>
+					<th>Total stock</th>
+					<th>Total stock Tk</th>
 					<th>Monthlycost</th>
 					<th>TotalProfit</th>
 					<th>Date</th>

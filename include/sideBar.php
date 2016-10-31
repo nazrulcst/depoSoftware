@@ -36,7 +36,7 @@
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='categorySetup')? 'active':null;?>"><a href="index.php?page=categorySetup&folder=setup"><i class="fa fa-circle-o"></i>Create new category</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='createPackageName')? 'active':null;?>"><a href="index.php?page=createPackageName&folder=setup"><i class="fa fa-circle-o"></i>Create new offer</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='userCreateSetup')? 'active':null;?>"><a href="index.php?page=userCreateSetup&folder=setup"><i class="fa fa-circle-o"></i>Create new user</a></li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewPackageName')? 'active':null;?>"><a href="index.php?page=viewPackageName&folder=setup"><i class="fa fa-circle-o"></i>Available offer</a></li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewPackageName')? 'active':null;?>"><a href="index.php?page=viewPackageName&folder=setup"><i class="fa fa-circle-o"></i>Available offer view</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlluser')? 'active':null;?>"><a href="index.php?page=viewAlluser&folder=setup"><i class="fa fa-circle-o"></i>All user list</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlldepoList')? 'active':null;?>"><a href="index.php?page=viewAlldepoList&folder=setup"><i class="fa fa-circle-o"></i>All depo list</a>
 		            </li>
@@ -117,7 +117,9 @@
 		          	<li class="<?php echo(isset($_GET['page']) && $_GET['page']=='workShopSetup')?'active':null;?>">
 		            	<a href="index.php?page=workShopSetup&folder=workshop"><i class="fa fa-circle-o"></i>Add product</a>
 		            </li>
-		            
+		            <li class="<?php echo(isset($_GET['page']) && $_GET['page']=='damageProductView')?'active':null;?>">
+		            	<a href="index.php?page=damageProductView&folder=workshop"><i class="fa fa-circle-o"></i>View damaged product</a>
+		            </li>
 		          </ul>
 		        </li>
 		        <!--Workshop Setup End-->
