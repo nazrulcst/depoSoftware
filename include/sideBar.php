@@ -42,11 +42,19 @@
 		            </li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='totalWarrantyView')? 'active':null;?>"><a href="index.php?page=totalWarrantyView&folder=setup"><i class="fa fa-circle-o"></i>All replaced product</a>
 		            </li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='dailyBalanceSetup')?'active':null;?>"><a href="index.php?page=dailyBalanceSetup&folder=setup">
+		            <li class="<?php echo (isset($_GET['folder']) && $_GET['folder']=='setup')?'active':null;?>"><a href="">
 		            	<i class="fa fa-circle-o"></i>Daily balance chart
-		            </a>
-		            	
-		            </li><li class="<?php echo (isset($_GET['page']) && $_GET['page']=='monthlyFinalBalanceSetup')?'active':null;?>"><a href="index.php?page=monthlyFinalBalanceSetup&folder=setup">
+		            	</a>
+		            	<ul class="treeview-menu">
+		            		<li class="<?php echo (isset($_GET['page']) && $_GET['page']=='dailyTotalBalView')?'active':null;?>"><a href="index.php?page=dailyTotalBalView&folder=setup">
+		            		<i class="fa fa-circle-o"></i>General sales chart
+		            		</a></li>
+		            		<li class="<?php echo (isset($_GET['page']) && $_GET['page']=='packageSalesView')?'active':null;?>"><a href="index.php?page=packageSalesView&folder=setup">
+		            		<i class="fa fa-circle-o"></i>Package sales chart
+		            		</a></li>
+		            	</ul>	
+		            </li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='monthlyFinalBalanceSetup')?'active':null;?>"><a href="index.php?page=monthlyFinalBalanceSetup&folder=setup">
 		            	<i class="fa fa-circle-o"></i>Monthly balance Sheet
 		            </a>
 		            	

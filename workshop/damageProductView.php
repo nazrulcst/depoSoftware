@@ -52,12 +52,13 @@
 			<?php
 				$pagePre=$pageNumber-1;
 				$pageNext=$pageNumber+1;
-				if($pageNumber==1){//checking the previous button
+				if($pageNumber<=1){//checking the previous button
 					echo"<a href='index.php?page=damageProductView&folder=workshop&pgNumber={$pagePre}' class='btn btn-primary btn-sm disabled'><span class='glyphicon glyphicon-chevron-left'></span>Prev</a> &nbsp;&nbsp;"; // Previous button
 				}else{
 					echo"<a href='index.php?page=damageProductView&folder=workshop&pgNumber={$pagePre}' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-chevron-left'></span>Prev</a> &nbsp;&nbsp;"; // Previous button
 				}
-				if($pageNumber <= $pagesNeed){
+
+				if($pageNumber <= $pagesNeed OR $pageNumber<1){
 					for($i=1;$i<=$pagesNeed;$i++){
 						if($i == $pageNumber){
 								echo "<a href='index.php?page=damageProductView&folder=workshop&pgNumber={$i}' class='btn btn-primary btn-sm'>$i</a>&nbsp;";
@@ -66,15 +67,13 @@
 						}
 					}
 				}else{
-					echo"End of pages ! 404";
+					echo"Page not found ! 404";
 				}
 				// checking the next button
 				if($pageNext==$pagesNeed){
-					echo"&nbsp;&nbsp;<a href='index.php?page=damageProductView&folder=workshop&pgNumber={$pageNext}' class='btn btn-primary btn-sm disabled'>Next<span class='glyphicon glyphicon-chevron-right'></span></a>"; // next button
-					echo"disabled";
+					echo"<a href='index.php?page=damageProductView&folder=workshop&pgNumber={$pageNext}' class='btn btn-primary btn-sm disabled'>Next<span class='glyphicon glyphicon-chevron-right'></span></a> &nbsp;&nbsp;"; // Next button
 				}else{
-					echo"&nbsp;&nbsp;<a href='index.php?page=damageProductView&folder=workshop&pgNumber={$pageNext}' class='btn btn-primary btn-sm'>Next<span class='glyphicon glyphicon-chevron-right'></span></a>"; // next button
-					echo"ok";
+					echo"<a href='index.php?page=damageProductView&folder=workshop&pgNumber={$pageNext}' class='btn btn-primary btn-sm'>Next<span class='glyphicon glyphicon-chevron-right'></span></a> &nbsp;&nbsp;"; // Next button
 				}
 			?>
 		</div>

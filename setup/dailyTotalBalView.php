@@ -2,27 +2,21 @@
 	require("database.php");
 	$depo_total_sales=$db->prepare("SELECT depo_total_sales.*,depo_total_sales.id AS depoTotalSalesId,depo.depo_name AS depoName,depo.id AS depoId FROM depo_total_sales LEFT JOIN depo ON depo_total_sales.depo_id=depo.id");
 	$depo_total_sales->execute();
-	$sl='';
+	$inc='';
 	$data='';
-	while($depoSalesRow=$depo_total_sales->fetch(PDO::FETCH_ASSOC)){
-		$sl++;
+	while($depo_tatal_sales_row=$depo_total_sales->fetch(PDO::FETCH_ASSOC)){
+		$inc++;
 		$data.="
 			<tr class='success'>
-				<td>$sl</td>
-				<td>{$depoSalesRow['depoName']}</td>
-				<td>{$depoSalesRow['depo_total_sales_quantity']}</td>
-				<td>{$depoSalesRow['today_sales_tk']}</td>
-				<td>{$depoSalesRow['date_time']}</td>
-				<td></td>
+				<td>$inc</td>
+				<td>{$depo_tatal_sales_row['depoName']}</td>
+				<td>{$depo_tatal_sales_row['depo_total_sales_quantity']}</td>
+				<td>{$depo_tatal_sales_row['today_sales_tk']}</td>
+				<td>{$depo_tatal_sales_row['date_time']}</td>
 			</tr>
 		";
-	}
-
-
+	};
 ?>
-
-
-
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-10 col-sm-offset-1">
@@ -37,13 +31,13 @@
 					<th>Sl No</th>
 					<th>Depo Name</th>
 					<th>General Sales</th>
-					<th>Total Sales</th>
+					<th>Total Sales Taka</th>
 					<th>Date</th>
 				</thead>
 				<tbody>
-					<?php echo $data;?>
+					<?php echo $data; ?>
 				</tbody>
-			</table>
+			</table><hr>
 		</div>
 	</div>
 </div>
