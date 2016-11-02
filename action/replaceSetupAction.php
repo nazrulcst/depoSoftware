@@ -60,11 +60,14 @@
 		$totalQuantity="";
 		$totalPrice="";
 		$i=0;
-		while($selProRow=$proIdSelect->fetch(PDO::FETCH_OBJ)){
-			$totalPrice+=$selProRow->total_price;
-			$totalQuantity+=$selProRow->quantity;
+		while($selProRow=$proIdSelect->fetch(PDO::FETCH_ASSOC)){
+			$totalPrice+=$selProRow['total_price'];
+			$totalQuantity+=$selProRow['quantity'];
 			$i++;
 		}
+		ECHO"<BR>";
+		echo "warranty table total quantity".$totalQuantity."<br>";
+		echo "warranty table total taka".$totalPrice."<br>";
 	// Total_warranty table data select
 		$selecTotalWarranty=$db->prepare("SELECT total_warranty.*,total_warranty.depo_id AS depoId,depo.id FROM total_warranty LEFT JOIN depo ON total_warranty.depo_id=depo.id WHERE total_warranty.depo_id=? AND total_warranty.warranty_date=?");
 		$selecTotalWarranty->bindParam(1,$depoId);
@@ -113,7 +116,5 @@
 		$_SESSION['rplsMsg']="<p class='alert alert-warning'>Please insert all fields !</p>";
 		header("Location:../index.php?page=replaceSetup&folder=replace");
 	}
-	
-
 ?>
 

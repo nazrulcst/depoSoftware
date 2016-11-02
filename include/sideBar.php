@@ -126,7 +126,7 @@
 		            	<a href="index.php?page=workShopSetup&folder=workshop"><i class="fa fa-circle-o"></i>Add product</a>
 		            </li>
 		            <li class="<?php echo(isset($_GET['page']) && $_GET['page']=='damageProductView')?'active':null;?>">
-		            	<a href="index.php?page=damageProductView&folder=workshop"><i class="fa fa-circle-o"></i>View damaged product</a>
+		            	<a href="index.php?page=damageProductView&folder=workshop"><i class="fa fa-circle-o"></i>Damage product view</a>
 		            </li>
 		          </ul>
 		        </li>

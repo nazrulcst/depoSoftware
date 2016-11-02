@@ -11,7 +11,7 @@
 	while($totalWarRow=$totalWarSel->fetch(PDO::FETCH_OBJ)){
 		$sl++;
 		$Date=$totalWarRow->warranty_date;
-		$formateDate=date("d-m-Y",strtotime($Date));
+		$formateDate=date("d-M-Y",strtotime($Date));
 		$totalQuantity+=$totalWarRow->warranty_quantity;
 		$totalTaka+=$totalWarRow->total_warranty_tk;
 		$data.="

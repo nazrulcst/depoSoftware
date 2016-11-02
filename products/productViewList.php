@@ -7,6 +7,10 @@
 	$totalPage=ceil($totalRow/$itemPerpage);
 	$pageNumber=(isset($_GET['pgNumber'])?$_GET['pgNumber']:$_GET['pgNumber']=1);
 	$start=($pageNumber-1)*$itemPerpage;
+	if($pageNumber<1){
+		$start=(-$pageNumber+1)*$itemPerpage;
+		echo"No recods found !";
+	}
 	$viewAllProList=$db->prepare("SELECT products.*,category.catName FROM products LEFT JOIN category ON products.cat_id=category.id LIMIT $start,$itemPerpage");
 	$viewAllProList->execute();
 	$sl='';

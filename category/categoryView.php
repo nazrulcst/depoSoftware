@@ -36,6 +36,9 @@ if(!$obj->userType()){ //it's use for restricstions for this application
 	$totalPage=ceil($totalCatRow/$perPageItem);
 	$pagesNumber=(isset($_GET['pgNumber'])?$_GET['pgNumber']:$_GET['pgNumber']=1);
 	$start=($pagesNumber-1)*$perPageItem;
+	if($pagesNumber<1){
+		$start=(-$pagesNumber+1)*$perPageItem;
+	}
 	$showCategory=$db->prepare("SELECT * FROM category LIMIT $start,$perPageItem");
 	$showCategory->execute();
 
