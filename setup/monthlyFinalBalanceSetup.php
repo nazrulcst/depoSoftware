@@ -110,6 +110,7 @@
 		$data='';
 		while($finalBalRow=$selFinalBal->fetch(PDO::FETCH_OBJ)){
 			$sl++;
+			$date=date('d-M-Y',strtotime($finalBalRow->final_bal_date));
 			$data.="
 				<tr class='success'>
 					<td>$sl</td>
@@ -123,7 +124,7 @@
 					<td>$finalBalRow->month_total_quantity</td>
 					<td>$finalBalRow->month_total_cost</td>
 					<td>$finalBalRow->total_profit</td>
-					<td>$finalBalRow->final_bal_date</td>
+					<td>$date</td>
 					<td></td>
 				</tr>
 			";
