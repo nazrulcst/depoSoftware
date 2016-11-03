@@ -73,7 +73,8 @@
 		          <ul class="treeview-menu">
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoInfoSetup')? 'active':null;?>"><a href="index.php?page=depoInfoSetup&folder=depoinfo"><i class="fa fa-circle-o"></i>Create new depo</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoView')? 'active':null;?>"><a href="index.php?page=depoView&folder=depoinfo"><i class="fa fa-circle-o"></i>View your depo</a></li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoStoreSetup')? 'active':null;?>"><a href="index.php?page=depoStoreSetup&folder=depoinfo"><i class="fa fa-circle-o"></i>Depo Store</a></li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoStoreSetup')? 'active':null;?>"><a href="index.php?page=depoStoreSetup&folder=depoinfo"><i class="fa fa-circle-o"></i>Depo Store add</a></li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoStoreView')? 'active':null;?>"><a href="index.php?page=depoStoreView&folder=depoinfo"><i class="fa fa-circle-o"></i>Depo Store View</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoTodaySales')? 'active':null;?>"><a href="index.php?page=depoTodaySales&folder=depoinfo"><i class="fa fa-circle-o"></i>Today sales add</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='packageSetup')? 'active':null;?>"><a href="index.php?page=packageSetup&folder=depoinfo"><i class="fa fa-circle-o"></i>Add package sales</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewDepoTotalSales')? 'active':null;?>"><a href="index.php?page=viewDepoTotalSales&folder=depoinfo"><i class="fa fa-circle-o"></i>View all sales</a></li>

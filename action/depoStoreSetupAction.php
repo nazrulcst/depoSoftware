@@ -29,12 +29,12 @@
 		if(!empty($depoId) && !empty($proId) && !empty($entQuantity)){
 			$db->beginTransaction();//Begin Transaction  connect and start
 		
-			if($proId==$depoStoreUpdateId && $strExistDate==$currentDateStr){// Depo Store update Query
-				$soreUpdate=$db->prepare("UPDATE depo_store SET pro_quantity=?,total_price=? WHERE id=? AND store_date=?");
+			if($proId==$depoStoreUpdateId){// Depo Store update Query
+				$soreUpdate=$db->prepare("UPDATE depo_store SET pro_quantity=?,total_price=?,store_date=? WHERE id=?");
 				$soreUpdate->bindParam(1,$updateQuantity);
 				$soreUpdate->bindParam(2,$upTotalPrice);
-				$soreUpdate->bindParam(3,$depoStoreId);
-				$soreUpdate->bindParam(4,$existDate);
+				$soreUpdate->bindParam(3,$currentDate);
+				$soreUpdate->bindParam(4,$depoStoreId);
 				$storeUpExe=$soreUpdate->execute();
 			}else{// Depo Store insert Query
 				$storeInsertQuery=$db->prepare("INSERT INTO depo_store SET depo_id=?,pro_id=?,pro_quantity=?,pro_price=?,total_price=?,store_date=?");

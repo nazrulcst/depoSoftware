@@ -8,7 +8,8 @@
 		$sl++;
 		$input.="
 			$proNameRow->proName : <input type='checkbox' name='productName[]' value='$proNameRow->deopStoreId'><br>
-			<input type='text' name='proQuantity[]' placeholder='Enter your quantity'>&nbsp;&nbsp;&nbsp;Pcs<br>
+			<input type='number' name='proQuantity[]' placeholder='Enter your quantity' style='width:200px'>&nbsp;&nbsp;&nbsp;Pcs&nbsp;&nbsp;&nbsp;
+			<input type='number' name='offPercent[]' placeholder='Enter your percentage' style='width:200px'>&nbsp;&nbsp;&nbsp;%Off<br>
 		";
 	}
 	$offerSel=$db->prepare("SELECT * FROM pack_name");

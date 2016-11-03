@@ -51,7 +51,7 @@ while($depoViewId=$depoViewQuery->fetch(PDO::FETCH_OBJ)){
 						<th>Email</th>
 						<th>District</th>
 						<th>Street</th>
-						<th>Edit</th>
+						<th>Update</th>
 					</tr>
 				</thead>
 				<tbody>					

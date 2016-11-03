@@ -1,5 +1,5 @@
 <?php
-require('database.php');
+	require('database.php');
 	$viewAlluser=$db->prepare("SELECT * FROM user");
 	$viewAlluser->execute();
 	$sl="";
@@ -13,11 +13,11 @@ require('database.php');
 				<td>$viewAllusrRow->userType</td>
 				<td>$viewAllusrRow->status</td>
 				<td>
-					<select name='msgs'>
-						<option>Select your action</option>
-						<option value='delete'>Delete</option>
-						<option value='active'>Active</option>
-						<option value='deactive'>Deactive</option>
+					<select name='msgs' id='actionId'>
+						<option id='actionMode'>Select your action</option>
+						<option id='actionMode' value='active'>Active</option>
+						<option id='actionMode' value='delete'>Delete</option>
+						<option id='actionMode' value='deactive'>Deactive</option>
 					</select>
 				</td>
 			</tr>
@@ -32,7 +32,7 @@ require('database.php');
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-10 col-sm-offset-1">
+		<div class="col-sm-8 col-sm-offset-2">
 			<table class="table table-hover table-bordered table-condensed">
 				<thead>
 					<th width="5%">Sl No</th>
@@ -52,15 +52,14 @@ require('database.php');
 			<hr>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-xs-8 col-xs-offset-2 text-center" style="margin-top:10px">
-			<?php
-				echo"<a class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-chevron-left'></span>Prev</a> &nbsp;"; // Previous button
-				for($i=1;$i<=5;$i++){
-					echo "<a href='' class='btn btn-default btn-sm text-green'>&nbsp; $i &nbsp;&nbsp;</a>";
-				}
-				echo"&nbsp;&nbsp;<a class='btn btn-primary btn-sm'>Next<span class='glyphicon glyphicon-chevron-right'></span></a>";// Next button
-			?>	
-		</div>
-	</div>
 </div>
+<script src="last.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#actionId").change(function(){
+			$(this.value).click(function(){
+				alert("nice");
+			});
+		});
+	});
+</script>
