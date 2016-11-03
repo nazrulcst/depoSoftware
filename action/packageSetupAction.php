@@ -10,9 +10,9 @@
 	//}
 	$userLoginId=$obj->userLoginId();
 	$depoStoreId=$_POST['productName'];
-	$productQuantity=$_POST['proQuantity'];
 	echo"<pre>";
-	print_r($productQuantity);
+	print_r($depoStoreId);
+	$productQuantity=$_POST['proQuantity'];
 	$offPercent=$_POST['offPercent'];
 	$packageName=trim(htmlspecialchars($_POST['packageName']));
 	$curDate=date('Y-m-d');
@@ -27,6 +27,7 @@
 	//if(!empty($packageName) && !empty($depoStoreId) && !empty($productQuantity)){
 		//$db->beginTransaction();// Transaction start
 		foreach($depoStoreId as $key=>$value){
+			foreach($productQuantity as $in=>$lolValue){
 			$depoStore=$db->prepare("SELECT * FROM depo_store WHERE id=?");
 			$depoStore->bindParam(1,$value);
 			$depoStore->execute();
@@ -35,21 +36,25 @@
 			$existTotalProQuan=$depoStoreRow->pro_quantity;
 			$existTotalProTaka=$depoStoreRow->total_price;
 			$updateQuantity=$existTotalProQuan-$productQuantity[$key];//for depo_store update quantity 
-			print_r($productQuantity[$key]);
-			
-			
 			$lastTaka=$updateQuantity*$existPrice;// it's for depo_store update taka 
-			echo $lastTaka;
 			$packagePrice+=$existPrice*$productQuantity[$key]; // use for package sales table
 			$packageQuantity+=$productQuantity[$key];// use for package sales table
 			$indTotalTaka=$productQuantity[$key]*$existPrice;// indivisula total price per product
 			$indPercentage=($offPercent[$key]/100)*$indTotalTaka;// indivisul percentage
+			
+			
+				$taka=$productQuantity[$in]*$existPrice;
+					
+			echo "this is somethin =".$taka."<br>";
+			}
 		// depo_store update query
 			$depoStoreUp=$db->prepare("UPDATE depo_store SET pro_quantity=?,total_price=? WHERE id=?");
 			$depoStoreUp->bindParam(1,$updateQuantity);
 			$depoStoreUp->bindParam(2,$lastTaka);
 			$depoStoreUp->bindParam(3,$value);
-			$depoStoreUp->execute();
+			//$depoStoreUp->execute();
+			
+			
 		}
 	/*/ Depo Id select Query
 		$depoIdSel=$db->prepare("SELECT depo.*,depo.id AS depoId,user.id FROM depo LEFT JOIN user ON depo.user_id=user.id WHERE depo.user_id=?");
