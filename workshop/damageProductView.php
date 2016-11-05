@@ -3,7 +3,7 @@
 	$selWorkshop=$db->prepare("SELECT * FROM workshop_loss");
 	$selWorkshop->execute();
 	$rowCount=$selWorkshop->rowCount();
-	$per_page_row=1;
+	$per_page_row=10;
 	$totalPage=ceil($rowCount/$per_page_row);
 	$pageNumber=(isset($_GET['pgNumber'])?(int)$_GET['pgNumber']:(int)$_GET['pgNumber']=1);
 	$startPage=(int)($pageNumber-1)*$per_page_row;
@@ -11,19 +11,20 @@
 		$startPage=(int)(-$pageNumber+1)*$per_page_row;
 		$_SESSION['erMsg']="You are enter wrong values !";
 	}
-	$showDateWorkshop=$db->prepare("SELECT *,products.pro_name AS proName FROM workshop_loss LEFT JOIN products ON workshop_loss.pro_id=products.id LIMIT $startPage,$per_page_row");
+	$showDateWorkshop=$db->prepare("SELECT *,workshop_loss.quantity AS lossQuantity,workshop_loss.total_price AS lossPrice, products.pro_name AS proName FROM workshop_loss LEFT JOIN products ON workshop_loss.pro_id=products.id LIMIT $startPage,$per_page_row");
 	$showDateWorkshop->execute();
 	$sl='';
 	$data='';
 	while($workShopRow=$showDateWorkshop->fetch(PDO::FETCH_ASSOC)){
 		$sl++;
+		$date=date('d-M-Y',strtotime($workShopRow['enter_date']));
 		$data.="
 			<tr class='success'>
 				<td>$sl</td>
 				<td>{$workShopRow['proName']}</td>
-				<td>{$workShopRow['quantity']}</td>
-				<td>{$workShopRow['total_price']}</td>
-				<td>{$workShopRow['enter_date']}</td>
+				<td>{$workShopRow['lossQuantity']}</td>
+				<td>{$workShopRow['lossPrice']}</td>
+				<td>{$date}</td>
 			</tr>
 		";
 	}

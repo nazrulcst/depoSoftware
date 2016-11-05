@@ -118,22 +118,28 @@
 		          </ul>
 		        </li>
 		         <!--Workshop Setup start-->
-		        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='workshop')?'active':null;?> treeview">
-		          <a href="#">
-		            <i class="fa fa-wrench text-green"></i> <span>Workshop</span>
-		            <span class="pull-right-container">
-		              <i class="fa fa-angle-left pull-right"></i>
-		            </span>
-		          </a>
-		          <ul class="treeview-menu">
-		          	<li class="<?php echo(isset($_GET['page']) && $_GET['page']=='workShopSetup')?'active':null;?>">
-		            	<a href="index.php?page=workShopSetup&folder=workshop"><i class="fa fa-circle-o"></i>Add product</a>
-		            </li>
-		            <li class="<?php echo(isset($_GET['page']) && $_GET['page']=='damageProductView')?'active':null;?>">
-		            	<a href="index.php?page=damageProductView&folder=workshop"><i class="fa fa-circle-o"></i>Damage product view</a>
-		            </li>
-		          </ul>
-		        </li>
+		         <?php
+		         	if($obj->userType()){
+		         ?>
+			        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='workshop')?'active':null;?> treeview">
+			          <a href="#">
+			            <i class="fa fa-wrench text-green"></i><span>Workshop</span>
+			            <span class="pull-right-container">
+			              <i class="fa fa-angle-left pull-right"></i>
+			            </span>
+			          </a>
+			          <ul class="treeview-menu">
+			          	<li class="<?php echo(isset($_GET['page']) && $_GET['page']=='workShopSetup')?'active':null;?>">
+			            	<a href="index.php?page=workShopSetup&folder=workshop"><i class="fa fa-circle-o"></i>Add product</a>
+			            </li>
+			            <li class="<?php echo(isset($_GET['page']) && $_GET['page']=='damageProductView')?'active':null;?>">
+			            	<a href="index.php?page=damageProductView&folder=workshop"><i class="fa fa-circle-o"></i>Damage product view</a>
+			            </li>
+			          </ul>
+			        </li>
+		        <?php } ?>
+		        
+
 		        <!--Workshop Setup End-->
 		      </ul>
 		    </section>

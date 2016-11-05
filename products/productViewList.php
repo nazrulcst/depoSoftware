@@ -76,7 +76,7 @@
 				<tbody>
 					<?php echo $data;?>			
 				</tbody>
-			</table>
+			</table><hr>
 		</div>
 	</div>
 	<div class="row"><!--Pagination Section start here-->
