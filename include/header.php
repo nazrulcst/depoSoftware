@@ -5,7 +5,7 @@ $userId=$_SESSION['userId'];
 $userNameSelect=$db->prepare("SELECT * FROM `user` WHERE id=?");
 $userNameSelect->bindParam(1,$userId);
 $userNameSelect->execute();
-$userNameRow=$userNameSelect->fetch(PDO::FETCH_OBJ);
+$userNameRow=$userNameSelect->fetch(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html>
@@ -180,7 +180,7 @@ $userNameRow=$userNameSelect->fetch(PDO::FETCH_OBJ);
 		          <li class="dropdown user user-menu">
 		            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 		              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-		              <span class="hidden-xs"><?php echo $userNameRow->userName;?></span>
+		              <span class="hidden-xs"><?php echo $userNameRow['userName'];?></span>
 		            </a>
 		            <ul class="dropdown-menu">
 		              <!-- User image -->

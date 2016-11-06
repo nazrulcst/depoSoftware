@@ -42,7 +42,7 @@ while($depoViewId=$depoViewQuery->fetch(PDO::FETCH_OBJ)){
 	<div class="row">
 		<div class="col-xs-6 col-sm-10 col-sm-offset-1">
 			<table class="table table-hover table-bordered">
-				<thead>
+				<thead class="text-green">
 					<tr>
 						<th>Sl No</th>
 						<th>Depo Name</th>

@@ -15,7 +15,7 @@ $totalPage=ceil($totalRow/$perPageDepoList);
 $pageNumber=(isset($_GET['pgNumber'])?(int)$_GET['pgNumber']:$_GET['pgNumber']=1);
 $start=($pageNumber-1)*$perPageDepoList;
 if($pageNumber<1){
-	$start=($pageNumber-1)*$perPageDepoList;
+	$start=(-$pageNumber+1)*$perPageDepoList;
 	echo"Recods not found !";
 }
 $viewAllDepo=$db->prepare("SELECT * FROM depo LIMIT $start,$perPageDepoList");

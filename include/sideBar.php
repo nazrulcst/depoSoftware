@@ -7,7 +7,7 @@
 		          <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 		        </div>
 		        <div class="pull-left info">
-		          <p><?php echo $userNameRow->userName;?></p>
+		          <p><?php echo $userNameRow['userName'];?></p>
 		          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 		        </div>
 		      </div>
@@ -25,43 +25,47 @@
 		      <!-- sidebar menu: : style can be found in sidebar.less -->
 		      <ul class="sidebar-menu">
 		        <li class="header">MAIN NAVIGATION</li>
-		        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='setup')?'active':null;?> treeview">
-		          <a href="#">
-		            <i class="fa fa-cog text-green"></i> <span>General Setup</span>
-		            <span class="pull-right-container">
-		              <i class="fa fa-angle-left pull-right"></i>
-		            </span>
-		          </a>
-		          <ul class="treeview-menu">
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='categorySetup')? 'active':null;?>"><a href="index.php?page=categorySetup&folder=setup"><i class="fa fa-circle-o"></i>Create new category</a></li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='createPackageName')? 'active':null;?>"><a href="index.php?page=createPackageName&folder=setup"><i class="fa fa-circle-o"></i>Create new offer</a></li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='userCreateSetup')? 'active':null;?>"><a href="index.php?page=userCreateSetup&folder=setup"><i class="fa fa-circle-o"></i>Create new user</a></li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewPackageName')? 'active':null;?>"><a href="index.php?page=viewPackageName&folder=setup"><i class="fa fa-circle-o"></i>Available offer view</a></li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlluser')? 'active':null;?>"><a href="index.php?page=viewAlluser&folder=setup"><i class="fa fa-circle-o"></i>All user list</a></li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlldepoList')? 'active':null;?>"><a href="index.php?page=viewAlldepoList&folder=setup"><i class="fa fa-circle-o"></i>All depo list</a>
-		            </li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='totalWarrantyView')? 'active':null;?>"><a href="index.php?page=totalWarrantyView&folder=setup"><i class="fa fa-circle-o"></i>All replaced product</a>
-		            </li>
-		            <li class="<?php echo (isset($_GET['folder']) && $_GET['folder']=='setup')?'active':null;?>"><a href="">
-		            	<i class="fa fa-circle-o"></i>Daily balance chart
-		            	</a>
-		            	<ul class="treeview-menu">
-		            		<li class="<?php echo (isset($_GET['page']) && $_GET['page']=='dailyTotalBalView')?'active':null;?>"><a href="index.php?page=dailyTotalBalView&folder=setup">
-		            		<i class="fa fa-circle-o"></i>General sales chart
-		            		</a></li>
-		            		<li class="<?php echo (isset($_GET['page']) && $_GET['page']=='packageSalesView')?'active':null;?>"><a href="index.php?page=packageSalesView&folder=setup">
-		            		<i class="fa fa-circle-o"></i>Package sales chart
-		            		</a></li>
-		            	</ul>	
-		            </li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='monthlyFinalBalanceSetup')?'active':null;?>"><a href="index.php?page=monthlyFinalBalanceSetup&folder=setup">
-		            	<i class="fa fa-circle-o"></i>Monthly balance Sheet
-		            </a>
-		            	
-		            </li>
-		            
-		          </ul>
-		        </li>
+		        <?php
+		        	if($obj->userType()){
+		        ?>
+			        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='setup')?'active':null;?> treeview">
+			          <a href="#">
+			            <i class="fa fa-cog text-green"></i> <span>General Setup</span>
+			            <span class="pull-right-container">
+			              <i class="fa fa-angle-left pull-right"></i>
+			            </span>
+			          </a>
+			          <ul class="treeview-menu">
+			            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='categorySetup')? 'active':null;?>"><a href="index.php?page=categorySetup&folder=setup"><i class="fa fa-circle-o"></i>Create new category</a></li>
+			            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='createPackageName')? 'active':null;?>"><a href="index.php?page=createPackageName&folder=setup"><i class="fa fa-circle-o"></i>Create new offer</a></li>
+			            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='userCreateSetup')? 'active':null;?>"><a href="index.php?page=userCreateSetup&folder=setup"><i class="fa fa-circle-o"></i>Create new user</a></li>
+			            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewPackageName')? 'active':null;?>"><a href="index.php?page=viewPackageName&folder=setup"><i class="fa fa-circle-o"></i>Available offer view</a></li>
+			            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlluser')? 'active':null;?>"><a href="index.php?page=viewAlluser&folder=setup"><i class="fa fa-circle-o"></i>All user list</a></li>
+			            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewAlldepoList')? 'active':null;?>"><a href="index.php?page=viewAlldepoList&folder=setup"><i class="fa fa-circle-o"></i>All depo list</a>
+			            </li>
+			            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='totalWarrantyView')? 'active':null;?>"><a href="index.php?page=totalWarrantyView&folder=setup"><i class="fa fa-circle-o"></i>All replaced product</a>
+			            </li>
+			            <li class="<?php echo (isset($_GET['folder']) && $_GET['folder']=='setup')?'active':null;?>"><a href="">
+			            	<i class="fa fa-circle-o"></i>Daily balance chart
+			            	</a>
+			            	<ul class="treeview-menu">
+			            		<li class="<?php echo (isset($_GET['page']) && $_GET['page']=='dailyTotalBalView')?'active':null;?>"><a href="index.php?page=dailyTotalBalView&folder=setup">
+			            		<i class="fa fa-circle-o"></i>General sales chart
+			            		</a></li>
+			            		<li class="<?php echo (isset($_GET['page']) && $_GET['page']=='packageSalesView')?'active':null;?>"><a href="index.php?page=packageSalesView&folder=setup">
+			            		<i class="fa fa-circle-o"></i>Package sales chart
+			            		</a></li>
+			            	</ul>	
+			            </li>
+			            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='monthlyFinalBalanceSetup')?'active':null;?>"><a href="index.php?page=monthlyFinalBalanceSetup&folder=setup">
+			            	<i class="fa fa-circle-o"></i>Monthly balance Sheet
+			            </a>
+			            	
+			            </li>
+			            
+			          </ul>
+			        </li>
+		        <?php } ?>
 		        <!--Depo Info start-->
 		        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='depoinfo')?'active':null;?> treeview">
 		          <a href="#">
@@ -82,20 +86,24 @@
 		        </li>
 		        <!--Depo Info End-->
 		        <!--Products Setup start-->
-		        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='products')?'active':null;?> treeview">
-		          <a href="#">
-		            <i class="fa fa-product-hunt text-green"></i> <span>Products Setup</span>
-		            <span class="pull-right-container">
-		              <i class="fa fa-angle-left pull-right"></i>
-		            </span>
-		          </a>
-		          <ul class="treeview-menu">
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='productSetup')? 'active':null;?>"><a href="index.php?page=productSetup&folder=products"><i class="fa fa-circle-o"></i>Add new product</a></li>
-		            <li class="<?php echo(isset($_GET['page']) && $_GET['page']=='productViewList')?'active':null;?>">
-		            	<a href="index.php?page=productViewList&folder=products"><i class="fa fa-circle-o"></i>View all product list</a>
-		            </li>
-		          </ul>
-		        </li>
+		        <?php
+		        	if($obj->userType()){
+		        ?>		
+			        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='products')?'active':null;?> treeview">
+			          <a href="#">
+			            <i class="fa fa-product-hunt text-green"></i> <span>Products Setup</span>
+			            <span class="pull-right-container">
+			              <i class="fa fa-angle-left pull-right"></i>
+			            </span>
+			          </a>
+			          <ul class="treeview-menu">
+			            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='productSetup')? 'active':null;?>"><a href="index.php?page=productSetup&folder=products"><i class="fa fa-circle-o"></i>Add new product</a></li>
+			            <li class="<?php echo(isset($_GET['page']) && $_GET['page']=='productViewList')?'active':null;?>">
+			            	<a href="index.php?page=productViewList&folder=products"><i class="fa fa-circle-o"></i>View all product list</a>
+			            </li>
+			          </ul>
+			        </li>
+		        <?php } ?>
 		        <!--Products Setup End-->
 		        <!-- Product replace-->
 		        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='replace')?'active':null;?> treeview">
@@ -138,8 +146,6 @@
 			          </ul>
 			        </li>
 		        <?php } ?>
-		        
-
 		        <!--Workshop Setup End-->
 		      </ul>
 		    </section>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2016 at 02:47 PM
+-- Generation Time: Nov 06, 2016 at 12:37 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -80,9 +80,8 @@ CREATE TABLE `depo` (
 --
 
 INSERT INTO `depo` (`id`, `user_id`, `depo_name`, `first_name`, `last_name`, `birthDate`, `nid`, `phone`, `email`, `website`, `upazilla`, `district`, `division`, `street`, `uploader`, `create_date`, `profile_update`, `picture`) VALUES
-(12, 4, 'Bright telecom ltd', 'araf', 'hossain', '0000-00-00', 123456789, 123456789, 'pazihasan@gmail.com', 'bright.com', 'dhaka', 'Dhaka', 'sylhet', 'Banasree project,Dhaka-1219', 'admin', '2016-09-28 10:51:29', '2016-10-01 04:40:12', '29d6959fba0638092486a5d52ed000e7d65bb46d.jpg'),
 (13, 2, 'bright insurance', 'araf', 'hossain', '2009-09-16', 123456789, 123456789, 'pazihasan@gmail.com', 'bright.com', 'Dhaka', 'Dhaka', 'chittagong', 'Banasree project,Dhaka-1219', 'nazrul', '2016-09-28 12:10:09', '2016-09-28 12:10:09', 'aac8ad733053ee9cbb56d28ab610f6284be1959b.jpg'),
-(14, 5, 'star technology', 'star', 'technology', '2006-10-16', 1233456789, 12457869, 'hukushpakush2015@gmail.com', 'fffff', 'fffff', 'frrrr', 'khulna', 'fffff', 'bsi', '2016-10-15 07:51:07', '2016-10-15 07:51:07', 'c10a4ebee38a08e1c5930b0f786b99f4404fbf77.jpg');
+(15, 8, 'New company', 'newOne', 'NewTwo', '2009-11-16', 12456389, 124563789, 'nawsherrafsan88@gmail.com', '', 'Dhaka', 'dhaka', 'dhaka', 'Dhaka', 'none', '2016-11-06 07:15:24', '2016-11-06 07:15:24', '4d998171e908f61dca6cc4d613b42198531e8ea2.jpg');
 
 -- --------------------------------------------------------
 
@@ -100,15 +99,6 @@ CREATE TABLE `depo_sales` (
   `date_time` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `depo_sales`
---
-
-INSERT INTO `depo_sales` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `date_time`) VALUES
-(1, 12, 19, 120, 16, 1920, '2016-10-24'),
-(2, 12, 21, 120, 60, 1920, '2016-10-24'),
-(3, 12, 20, 300, 25, 2220, '2016-10-24');
-
 -- --------------------------------------------------------
 
 --
@@ -125,15 +115,6 @@ CREATE TABLE `depo_store` (
   `store_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `depo_store`
---
-
-INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`, `total_price`, `store_date`) VALUES
-(3, 12, 20, -235, 300, -70500, '2016-10-24'),
-(4, 12, 19, -140, 120, -16800, '2016-10-27'),
-(9, 12, 22, 60, 500, 30000, '2016-10-27');
-
 -- --------------------------------------------------------
 
 --
@@ -147,14 +128,6 @@ CREATE TABLE `depo_total_sales` (
   `today_sales_tk` int(11) NOT NULL,
   `date_time` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `depo_total_sales`
---
-
-INSERT INTO `depo_total_sales` (`id`, `depo_id`, `depo_total_sales_quantity`, `today_sales_tk`, `date_time`) VALUES
-(15, 12, 0, 300, '2016-10-19'),
-(16, 12, 101, 6060, '2016-10-24');
 
 -- --------------------------------------------------------
 
@@ -226,7 +199,9 @@ INSERT INTO `final_balance` (`id`, `total_pro_quantity`, `total_pro_taka`, `tota
 (3, 610, 91200, 0, 300, 240, 28800, 610, 91500, 62700, '2016-10-23'),
 (4, 610, 91200, 0, 300, 240, 28800, 610, 91500, 62700, '2016-10-23'),
 (5, 610, 91200, 0, 300, 240, 28800, 610, 91500, 62700, '2016-10-23'),
-(6, 610, 91200, 0, 300, 240, 28800, 610, 91500, 62700, '2016-10-23');
+(6, 610, 91200, 0, 300, 240, 28800, 610, 91500, 62700, '2016-10-23'),
+(12, 932, 60420, 101, 6360, 310, 48400, 1043, 67230, 18830, '2016-10-31'),
+(13, 932, 60420, 101, 6360, 310, 48400, 1043, 67230, 18830, '2016-10-31');
 
 -- --------------------------------------------------------
 
@@ -275,15 +250,6 @@ CREATE TABLE `package` (
   `package_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `package`
---
-
-INSERT INTO `package` (`id`, `depo_id`, `pack_name_id`, `total_item`, `percentageOff`, `total_sales_taka`, `package_date`) VALUES
-(2, 12, 3, 10, 15, 450, '2016-10-27'),
-(3, 12, 3, 0, 15, 0, '2016-10-27'),
-(4, 12, 3, 10, 15, 450, '2016-10-27');
-
 -- --------------------------------------------------------
 
 --
@@ -323,16 +289,6 @@ CREATE TABLE `products` (
   `entry_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `user_id`, `cat_id`, `pro_name`, `pro_price`, `quantity`, `total_price`, `uploader`, `entry_date`) VALUES
-(19, 4, 20, 'Bags', 120, 142, 17040, 'admin', '2016-10-22'),
-(20, 4, 21, 'mouse', 300, 216, 300, 'admin', '2016-10-22'),
-(21, 4, 27, 'notes', 120, 216, 120, 'admin', '2016-10-22'),
-(22, 4, 25, 'nazrul', 500, 140, 70000, 'admin', '2016-09-14');
-
 -- --------------------------------------------------------
 
 --
@@ -346,14 +302,6 @@ CREATE TABLE `total_warranty` (
   `total_warranty_tk` int(11) NOT NULL,
   `warranty_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `total_warranty`
---
-
-INSERT INTO `total_warranty` (`id`, `depo_id`, `warranty_quantity`, `total_warranty_tk`, `warranty_date`) VALUES
-(14, 12, 60, 7200, '2016-10-24'),
-(15, 12, 70, 8400, '2016-10-24');
 
 -- --------------------------------------------------------
 
@@ -376,8 +324,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `userName`, `password`, `userType`, `last_login`, `status`) VALUES
 (2, 'nazrul', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 'employee', '2016-08-27 06:58:46', 'active'),
-(4, 'admin', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 'admin', '2016-08-27 09:12:03', 'active'),
-(5, 'bsi', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 'superadmin', '2016-09-18 11:21:57', 'active');
+(7, 'admin', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 'admin', '2016-11-06 06:36:34', 'active'),
+(8, 'none', '7110eda4d09e062aa5e4a390b0a572ac0d2c0220', 'employee', '2016-11-06 07:13:51', 'active');
 
 -- --------------------------------------------------------
 
@@ -395,14 +343,6 @@ CREATE TABLE `warranty` (
   `replace_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `warranty`
---
-
-INSERT INTO `warranty` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `replace_date`) VALUES
-(8, 12, 19, 120, 20, 2400, '2016-10-24'),
-(11, 12, 21, 120, 50, 6000, '2016-10-24');
-
 -- --------------------------------------------------------
 
 --
@@ -416,16 +356,6 @@ CREATE TABLE `workshop_loss` (
   `total_price` int(11) NOT NULL,
   `enter_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `workshop_loss`
---
-
-INSERT INTO `workshop_loss` (`id`, `pro_id`, `quantity`, `total_price`, `enter_date`) VALUES
-(2, 19, 80, 9600, '2016-10-23'),
-(3, 21, 190, 22800, '2016-10-24'),
-(4, 22, 20, 10000, '2016-10-24'),
-(17, 20, 20, 6000, '2016-10-24');
 
 --
 -- Indexes for dumped tables
@@ -576,22 +506,22 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `depo`
 --
 ALTER TABLE `depo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `depo_sales`
 --
 ALTER TABLE `depo_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `depo_store`
 --
 ALTER TABLE `depo_store`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `depo_total_sales`
 --
 ALTER TABLE `depo_total_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `due`
 --
@@ -606,7 +536,7 @@ ALTER TABLE `due_pay`
 -- AUTO_INCREMENT for table `final_balance`
 --
 ALTER TABLE `final_balance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `message`
 --
@@ -621,7 +551,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `pack_name`
 --
@@ -631,27 +561,27 @@ ALTER TABLE `pack_name`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `total_warranty`
 --
 ALTER TABLE `total_warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `warranty`
 --
 ALTER TABLE `warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `workshop_loss`
 --
 ALTER TABLE `workshop_loss`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- Constraints for dumped tables
 --
