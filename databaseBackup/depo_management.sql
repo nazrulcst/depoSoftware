@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 06, 2016 at 12:37 PM
+-- Generation Time: Nov 08, 2016 at 01:42 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -81,7 +81,8 @@ CREATE TABLE `depo` (
 
 INSERT INTO `depo` (`id`, `user_id`, `depo_name`, `first_name`, `last_name`, `birthDate`, `nid`, `phone`, `email`, `website`, `upazilla`, `district`, `division`, `street`, `uploader`, `create_date`, `profile_update`, `picture`) VALUES
 (13, 2, 'bright insurance', 'araf', 'hossain', '2009-09-16', 123456789, 123456789, 'pazihasan@gmail.com', 'bright.com', 'Dhaka', 'Dhaka', 'chittagong', 'Banasree project,Dhaka-1219', 'nazrul', '2016-09-28 12:10:09', '2016-09-28 12:10:09', 'aac8ad733053ee9cbb56d28ab610f6284be1959b.jpg'),
-(15, 8, 'New company', 'newOne', 'NewTwo', '2009-11-16', 12456389, 124563789, 'nawsherrafsan88@gmail.com', '', 'Dhaka', 'dhaka', 'dhaka', 'Dhaka', 'none', '2016-11-06 07:15:24', '2016-11-06 07:15:24', '4d998171e908f61dca6cc4d613b42198531e8ea2.jpg');
+(15, 8, 'New company', 'newOne', 'NewTwo', '2009-11-16', 12456389, 124563789, 'nawsherrafsan88@gmail.com', '', 'Dhaka', 'dhaka', 'dhaka', 'Dhaka', 'none', '2016-11-06 07:15:24', '2016-11-06 07:15:24', '4d998171e908f61dca6cc4d613b42198531e8ea2.jpg'),
+(16, 7, 'bright company', 'nymer', 'messi', '2016-11-16', 2147483647, 124578963, 'nawsherrafsan88@gmail.com', 'www.facebook.com', 'Dhaka', 'Dhaka', 'dhaka', 'Banasree', 'admin', '2016-11-08 04:19:32', '2016-11-08 04:19:32', '8fdb98b139fc9f849cb725ae0a1e377e172a472b.jpg');
 
 -- --------------------------------------------------------
 
@@ -114,6 +115,15 @@ CREATE TABLE `depo_store` (
   `total_price` int(11) NOT NULL,
   `store_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `depo_store`
+--
+
+INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`, `total_price`, `store_date`) VALUES
+(1, 16, 2, -280, 50, -14000, '2016-11-08'),
+(2, 16, 1, 50, 120, 6000, '2016-11-08'),
+(3, 16, 3, 100, 130, 13000, '2016-11-08');
 
 -- --------------------------------------------------------
 
@@ -243,12 +253,19 @@ CREATE TABLE `notification` (
 CREATE TABLE `package` (
   `id` int(11) NOT NULL,
   `depo_id` int(11) NOT NULL,
-  `pack_name_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
   `total_item` int(11) NOT NULL,
   `percentageOff` int(11) NOT NULL,
   `total_sales_taka` int(11) NOT NULL,
   `package_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `package`
+--
+
+INSERT INTO `package` (`id`, `depo_id`, `store_id`, `total_item`, `percentageOff`, `total_sales_taka`, `package_date`) VALUES
+(4, 16, 1, 120, 0, 3000, '2016-11-08');
 
 -- --------------------------------------------------------
 
@@ -288,6 +305,15 @@ CREATE TABLE `products` (
   `uploader` varchar(30) NOT NULL,
   `entry_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `user_id`, `cat_id`, `pro_name`, `pro_price`, `quantity`, `total_price`, `uploader`, `entry_date`) VALUES
+(1, 7, 17, 'Bags', 120, 450, 54000, 'admin', '2016-11-08'),
+(2, 7, 24, 'mobile', 50, 800, 40000, 'admin', '2016-11-08'),
+(3, 7, 27, 'mouse', 130, 500, 65000, 'admin', '2016-11-08');
 
 -- --------------------------------------------------------
 
@@ -439,10 +465,8 @@ ALTER TABLE `notification`
 --
 ALTER TABLE `package`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `pack_name_id` (`pack_name_id`),
-  ADD KEY `pack_name_id_2` (`pack_name_id`),
-  ADD KEY `pack_name_id_3` (`pack_name_id`),
-  ADD KEY `depo_id` (`depo_id`);
+  ADD KEY `depo_id` (`depo_id`),
+  ADD KEY `store_id` (`store_id`);
 
 --
 -- Indexes for table `pack_name`
@@ -506,22 +530,22 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `depo`
 --
 ALTER TABLE `depo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `depo_sales`
 --
 ALTER TABLE `depo_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `depo_store`
 --
 ALTER TABLE `depo_store`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `depo_total_sales`
 --
 ALTER TABLE `depo_total_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `due`
 --
@@ -551,7 +575,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `pack_name`
 --
@@ -561,12 +585,12 @@ ALTER TABLE `pack_name`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `total_warranty`
 --
 ALTER TABLE `total_warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `user`
 --
@@ -576,12 +600,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `warranty`
 --
 ALTER TABLE `warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `workshop_loss`
 --
 ALTER TABLE `workshop_loss`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Constraints for dumped tables
 --
@@ -635,8 +659,8 @@ ALTER TABLE `message`
 -- Constraints for table `package`
 --
 ALTER TABLE `package`
-  ADD CONSTRAINT `package_ibfk_1` FOREIGN KEY (`pack_name_id`) REFERENCES `pack_name` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `package_ibfk_2` FOREIGN KEY (`depo_id`) REFERENCES `depo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `package_ibfk_2` FOREIGN KEY (`depo_id`) REFERENCES `depo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `package_ibfk_3` FOREIGN KEY (`store_id`) REFERENCES `depo_store` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `products`

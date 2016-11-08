@@ -10,11 +10,10 @@
 	//}
 	$userLoginId=$obj->userLoginId();
 	$depoStoreId=$_POST['productName'];
-	echo"<pre>";
-	print_r($depoStoreId);
 	$productQuantity=$_POST['proQuantity'];
 	$offPercent=$_POST['offPercent'];
-	$packageName=trim(htmlspecialchars($_POST['packageName']));
+	$packageName=trim($_POST['packageName']);
+	echo $packageName;
 	$curDate=date('Y-m-d');
 	$curStrDate=strtotime($curDate);
 
@@ -24,10 +23,16 @@
 	$packageQuantity='';
 	$updatePackExe='';
 	$packInsertExe='';
-	//if(!empty($packageName) && !empty($depoStoreId) && !empty($productQuantity)){
+	// Depo Id select Query complete
+		$depoIdSel=$db->prepare("SELECT depo.*,depo.id AS depoId,user.id FROM depo LEFT JOIN user ON depo.user_id=user.id WHERE depo.user_id=?");
+		$depoIdSel->bindParam(1,$userLoginId);
+		$depoIdSel->execute();
+		$depoIdRow=$depoIdSel->fetch(PDO::FETCH_ASSOC);
+		$depId=$depoIdRow['depoId'];
+	//if(!empty($depoStoreId) && !empty($productQuantity)){
 		//$db->beginTransaction();// Transaction start
 		foreach($depoStoreId as $key=>$value){
-			foreach($productQuantity as $in=>$lolValue){
+
 			$depoStore=$db->prepare("SELECT * FROM depo_store WHERE id=?");
 			$depoStore->bindParam(1,$value);
 			$depoStore->execute();
@@ -35,39 +40,74 @@
 			$existPrice=$depoStoreRow->pro_price;
 			$existTotalProQuan=$depoStoreRow->pro_quantity;
 			$existTotalProTaka=$depoStoreRow->total_price;
-			$updateQuantity=$existTotalProQuan-$productQuantity[$key];//for depo_store update quantity 
-			$lastTaka=$updateQuantity*$existPrice;// it's for depo_store update taka 
-			$packagePrice+=$existPrice*$productQuantity[$key]; // use for package sales table
-			$packageQuantity+=$productQuantity[$key];// use for package sales table
-			$indTotalTaka=$productQuantity[$key]*$existPrice;// indivisula total price per product
-			$indPercentage=($offPercent[$key]/100)*$indTotalTaka;// indivisul percentage
-			
-			
-				$taka=$productQuantity[$in]*$existPrice;
-					
-			echo "this is somethin =".$taka."<br>";
-			}
-		// depo_store update query
+			$entTotalQuan=$productQuantity[$key]+$offPercent[$key];//input total Quantity
+			$packageQuantity=$entTotalQuan;//package total quantity
+			$sinProPrice=$productQuantity[$key]*$existPrice;//input single pro_price
+			$sinProPerPrice=$offPercent[$key]*$existPrice;//input single percentage
+			$toalTak=$sinProPrice+$sinProPerPrice;//input total taka
+			$percentageOff=($offPercent[$key]/100);//single pro_percentage
+			echo $percentageOff;
+			$totalProPrice=$toalTak-$sinProPerPrice;//product Totalprice
+
+			$updateQuantity=$existTotalProQuan-$entTotalQuan;//depo_store update quantity
+			$depoUpdateTk=$updateQuantity*$existPrice;//depo_store update taka
+			// depo_store update query
 			$depoStoreUp=$db->prepare("UPDATE depo_store SET pro_quantity=?,total_price=? WHERE id=?");
 			$depoStoreUp->bindParam(1,$updateQuantity);
-			$depoStoreUp->bindParam(2,$lastTaka);
+			$depoStoreUp->bindParam(2,$depoUpdateTk);
 			$depoStoreUp->bindParam(3,$value);
-			//$depoStoreUp->execute();
-			
-			
-		}
-	/*/ Depo Id select Query
-		$depoIdSel=$db->prepare("SELECT depo.*,depo.id AS depoId,user.id FROM depo LEFT JOIN user ON depo.user_id=user.id WHERE depo.user_id=?");
-		$depoIdSel->bindParam(1,$userLoginId);
-		$depoIdSel->execute();
-		$depoIdRow=$depoIdSel->fetch(PDO::FETCH_ASSOC);
-		$depId=$depoIdRow['depoId'];
-	//  pack_name id select query
+			$depoStoreUp->execute();
+
+			if(empty($packageName)){
+				//select all data from package
+				$selectPackage=$db->prepare("SELECT * FROM package WHERE store_id=? AND package_date=?");
+				$selectPackage->bindParam(1,$value);
+				$selectPackage->bindParam(2,$curDate);
+				$selectPackage->execute();
+				$rowPackage=$selectPackage->fetch(PDO::FETCH_ASSOC);
+				$existDepoId=$rowPackage['depo_id'];
+				$existStoreId=$rowPackage['store_id'];
+				$existDate=$rowPackage['package_date'];
+				$existItem=$rowPackage['total_item'];
+				$existTaka=$rowPackage['total_sales_taka'];
+				$existPercentage=$rowPackage['percentageOff'];
+				$strExistDate=strtotime($existDate);
+				$updateItem=$existItem+$entTotalQuan;
+				$updateTotalTk=$existTaka+$totalProPrice;
+				$updatePercentage=$existPercentage+$percentageOff;
+				if($existStoreId==$value && $strExistDate==$curStrDate){
+					// package table data update
+					$packageUpdate=$db->prepare("UPDATE package SET total_item=?,percentageOff=?,total_sales_taka=? WHERE store_id=? AND package_date=?");
+					$packageUpdate->bindParam(1,$updateItem);
+					$packageUpdate->bindParam(2,$updatePercentage);
+					$packageUpdate->bindParam(3,$updateTotalTk);
+					$packageUpdate->bindParam(4,$value);
+					$packageUpdate->bindParam(5,$curDate);
+					$updatePackExe=$packageUpdate->execute();
+					//
+					echo"update";
+				}else{
+					//single product insert Query
+					$packageInsert=$db->prepare("INSERT INTO package SET depo_id=?,store_id=?,total_item=?,percentageOff=?,total_sales_taka=?,package_date=?");
+					$packageInsert->bindParam(1,$depId);
+					$packageInsert->bindParam(2,$value);
+					$packageInsert->bindParam(3,$entTotalQuan);
+					$packageInsert->bindParam(4,$percentageOff);
+					$packageInsert->bindParam(5,$totalProPrice);
+					$packageInsert->bindParam(6,$curDate);
+					$packInsertExe=$packageInsert->execute();
+					echo"insert";
+				}
+				
+			}//first if condition
+
+		}//foreach
+
+	/*/  pack_name id select query complete
 		$pack_nameSel=$db->prepare("SELECT * FROM pack_name WHERE package_name=?");
 		$pack_nameSel->bindParam(1,$packageName);
 		$pack_nameSel->execute();
 		$pack_NameRow=$pack_nameSel->fetch(PDO::FETCH_ASSOC);
-		$packNameId=$pack_NameRow['id'];
 		$packNamePercentage=$pack_NameRow['percentage'];
 	// select all data from package
 		$selectPackage=$db->prepare("SELECT * FROM package WHERE pack_name_id=? AND package_date=?");
@@ -96,9 +136,8 @@
 		//}else{
 			// package table data insert	
 			$totalSalesTaka=($packNamePercentage/100)*$packagePrice;
-			$packageInsert=$db->prepare("INSERT INTO package SET depo_id=?,pack_name_id=?,total_item=?,percentageOff=?,total_sales_taka=?,package_date=?");
+			$packageInsert=$db->prepare("INSERT INTO package SET depo_id=?,total_item=?,percentageOff=?,total_sales_taka=?,package_date=?");
 			$packageInsert->bindParam(1,$depId);
-			$packageInsert->bindParam(2,$packNameId);
 			$packageInsert->bindParam(3,$packageQuantity);
 			$packageInsert->bindParam(4,$packNamePercentage);
 			$packageInsert->bindParam(5,$totalSalesTaka);

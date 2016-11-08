@@ -9,7 +9,7 @@
 		$input.="
 			$proNameRow->proName : <input type='checkbox' name='productName[]' value='$proNameRow->deopStoreId'><br>
 			<input type='number' name='proQuantity[]' placeholder='Enter your quantity'>&nbsp;&nbsp;&nbsp;Pcs&nbsp;&nbsp;&nbsp;
-			<input type='number' name='offPercent[]' placeholder='Enter your percentage'>&nbsp;&nbsp;&nbsp;%Off<br>
+			<input type='number' name='offPercent[]' placeholder='Enter your free pcs'>&nbsp;&nbsp;&nbsp;Free pcs<br>
 		";
 	}
 	$offerSel=$db->prepare("SELECT * FROM pack_name");
@@ -55,7 +55,7 @@
 					<div class="form-group">
 						<label for="packageName">Package Name :</label>
 						<select name="packageName" id="packageName" class="form-control">
-							<option>Select your package</option>
+							<option value="">Select your package</option>
 							<?php echo $offData;?>	
 						</select>
 					</div>
