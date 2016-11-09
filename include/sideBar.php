@@ -81,7 +81,10 @@
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoStoreView')? 'active':null;?>"><a href="index.php?page=depoStoreView&folder=depoinfo"><i class="fa fa-circle-o"></i>Depo Store View</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='depoTodaySales')? 'active':null;?>"><a href="index.php?page=depoTodaySales&folder=depoinfo"><i class="fa fa-circle-o"></i>Today sales add</a></li>
 		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='packageSetup')? 'active':null;?>"><a href="index.php?page=packageSetup&folder=depoinfo"><i class="fa fa-circle-o"></i>Add package sales</a></li>
-		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewDepoTotalSales')? 'active':null;?>"><a href="index.php?page=viewDepoTotalSales&folder=depoinfo"><i class="fa fa-circle-o"></i>View all sales</a></li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewTodaySales')? 'active':null;?>"><a href="index.php?page=viewTodaySales&folder=depoinfo"><i class="fa fa-circle-o"></i>Today sales view</a></li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewTodayPackageSales')? 'active':null;?>"><a href="index.php?page=viewTodayPackageSales&folder=depoinfo"><i class="fa fa-circle-o"></i>Package sales view</a></li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewTodayWholeSales')? 'active':null;?>"><a href="index.php?page=viewTodayWholeSales&folder=depoinfo"><i class="fa fa-circle-o"></i>Whole sales view</a></li>
+		            <li class="<?php echo (isset($_GET['page']) && $_GET['page']=='viewDepoTotalSales')? 'active':null;?>"><a href="index.php?page=viewDepoTotalSales&folder=depoinfo"><i class="fa fa-circle-o"></i>Total sales view</a></li>
 		          </ul>
 		        </li>
 		        <!--Depo Info End-->

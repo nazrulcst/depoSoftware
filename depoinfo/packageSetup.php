@@ -55,7 +55,7 @@
 					<div class="form-group">
 						<label for="packageName">Package Name :</label>
 						<select name="packageName" id="packageName" class="form-control">
-							<option value="">Select your package</option>
+							<option value="">Select your package for whole sales</option>
 							<?php echo $offData;?>	
 						</select>
 					</div>

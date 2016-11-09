@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2016 at 01:42 PM
+-- Generation Time: Nov 09, 2016 at 01:50 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -41,7 +41,6 @@ INSERT INTO `category` (`id`, `catName`) VALUES
 (21, 'computer'),
 (22, 'laptop'),
 (23, 'deskTable'),
-(24, 'button'),
 (25, 'mango'),
 (26, 'apple'),
 (27, 'banana'),
@@ -100,6 +99,14 @@ CREATE TABLE `depo_sales` (
   `date_time` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `depo_sales`
+--
+
+INSERT INTO `depo_sales` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `date_time`) VALUES
+(1, 16, 1, 120, 20, 2400, '2016-11-09'),
+(2, 16, 3, 130, 30, 3700, '2016-11-09');
+
 -- --------------------------------------------------------
 
 --
@@ -121,9 +128,8 @@ CREATE TABLE `depo_store` (
 --
 
 INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`, `total_price`, `store_date`) VALUES
-(1, 16, 2, -280, 50, -14000, '2016-11-08'),
-(2, 16, 1, 50, 120, 6000, '2016-11-08'),
-(3, 16, 3, 100, 130, 13000, '2016-11-08');
+(2, 16, 1, 0, 120, 0, '2016-11-09'),
+(3, 16, 3, 30, 130, 3900, '2016-11-08');
 
 -- --------------------------------------------------------
 
@@ -138,6 +144,13 @@ CREATE TABLE `depo_total_sales` (
   `today_sales_tk` int(11) NOT NULL,
   `date_time` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `depo_total_sales`
+--
+
+INSERT INTO `depo_total_sales` (`id`, `depo_id`, `depo_total_sales_quantity`, `today_sales_tk`, `date_time`) VALUES
+(1, 16, 30, 3700, '2016-11-09');
 
 -- --------------------------------------------------------
 
@@ -255,7 +268,7 @@ CREATE TABLE `package` (
   `depo_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL,
   `total_item` int(11) NOT NULL,
-  `percentageOff` int(11) NOT NULL,
+  `percentageOff` float NOT NULL,
   `total_sales_taka` int(11) NOT NULL,
   `package_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -265,7 +278,7 @@ CREATE TABLE `package` (
 --
 
 INSERT INTO `package` (`id`, `depo_id`, `store_id`, `total_item`, `percentageOff`, `total_sales_taka`, `package_date`) VALUES
-(4, 16, 1, 120, 0, 3000, '2016-11-08');
+(14, 16, 2, 10, 0, 1200, '2016-11-09');
 
 -- --------------------------------------------------------
 
@@ -276,7 +289,7 @@ INSERT INTO `package` (`id`, `depo_id`, `store_id`, `total_item`, `percentageOff
 CREATE TABLE `pack_name` (
   `id` int(11) NOT NULL,
   `package_name` varchar(35) NOT NULL,
-  `percentage` int(2) NOT NULL
+  `percentage` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -311,9 +324,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `user_id`, `cat_id`, `pro_name`, `pro_price`, `quantity`, `total_price`, `uploader`, `entry_date`) VALUES
-(1, 7, 17, 'Bags', 120, 450, 54000, 'admin', '2016-11-08'),
-(2, 7, 24, 'mobile', 50, 800, 40000, 'admin', '2016-11-08'),
-(3, 7, 27, 'mouse', 130, 500, 65000, 'admin', '2016-11-08');
+(1, 7, 17, 'Bags', 120, 430, 51600, 'admin', '2016-11-08'),
+(3, 7, 27, 'mouse', 130, 50000, 6500000, 'admin', '2016-11-08'),
+(4, 7, 28, 'PEN', 120, 500, 60000, 'admin', '2016-11-09');
 
 -- --------------------------------------------------------
 
@@ -368,6 +381,30 @@ CREATE TABLE `warranty` (
   `total_price` int(11) NOT NULL,
   `replace_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `whole_sales`
+--
+
+CREATE TABLE `whole_sales` (
+  `id` int(11) NOT NULL,
+  `depo_id` int(11) NOT NULL,
+  `pack_name_id` int(11) NOT NULL,
+  `total_item` int(11) NOT NULL,
+  `percentage` float NOT NULL,
+  `whole_sales_tk` int(11) NOT NULL,
+  `whole_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `whole_sales`
+--
+
+INSERT INTO `whole_sales` (`id`, `depo_id`, `pack_name_id`, `total_item`, `percentage`, `whole_sales_tk`, `whole_date`) VALUES
+(1, 16, 4, 60, 25, 1500, '2016-11-09'),
+(2, 16, 3, 30, 15, 330, '2016-11-09');
 
 -- --------------------------------------------------------
 
@@ -510,6 +547,14 @@ ALTER TABLE `warranty`
   ADD KEY `pro_id_3` (`pro_id`);
 
 --
+-- Indexes for table `whole_sales`
+--
+ALTER TABLE `whole_sales`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `depo_id` (`depo_id`),
+  ADD KEY `pack_name_id` (`pack_name_id`);
+
+--
 -- Indexes for table `workshop_loss`
 --
 ALTER TABLE `workshop_loss`
@@ -535,7 +580,7 @@ ALTER TABLE `depo`
 -- AUTO_INCREMENT for table `depo_sales`
 --
 ALTER TABLE `depo_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `depo_store`
 --
@@ -545,7 +590,7 @@ ALTER TABLE `depo_store`
 -- AUTO_INCREMENT for table `depo_total_sales`
 --
 ALTER TABLE `depo_total_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `due`
 --
@@ -575,7 +620,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `pack_name`
 --
@@ -585,7 +630,7 @@ ALTER TABLE `pack_name`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `total_warranty`
 --
@@ -601,6 +646,11 @@ ALTER TABLE `user`
 --
 ALTER TABLE `warranty`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `whole_sales`
+--
+ALTER TABLE `whole_sales`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `workshop_loss`
 --
@@ -681,6 +731,13 @@ ALTER TABLE `total_warranty`
 ALTER TABLE `warranty`
   ADD CONSTRAINT `warranty_ibfk_1` FOREIGN KEY (`depo_id`) REFERENCES `depo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `warranty_ibfk_3` FOREIGN KEY (`pro_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `whole_sales`
+--
+ALTER TABLE `whole_sales`
+  ADD CONSTRAINT `whole_sales_ibfk_1` FOREIGN KEY (`depo_id`) REFERENCES `depo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `whole_sales_ibfk_2` FOREIGN KEY (`pack_name_id`) REFERENCES `pack_name` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `workshop_loss`

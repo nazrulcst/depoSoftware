@@ -17,6 +17,7 @@
 	$data='';
 	while($viewAllProListRow=$viewAllProList->fetch(PDO::FETCH_OBJ)){
 		$sl++;
+		$date=date('d-M-Y',strtotime($viewAllProListRow->entry_date));
 		$data.="
 			<tr class='success'>
 				<td>$sl</td>
@@ -25,13 +26,14 @@
 				<td>$viewAllProListRow->pro_price</td>
 				<td>$viewAllProListRow->quantity</td>
 				<td>$viewAllProListRow->total_price</td>
+				<td>$date</td>
 				<td>
 					<a href='index.php?page=productEdit&folder=products&proEditId=$viewAllProListRow->id' class='btn btn-primary'>
 						<span class='glyphicon glyphicon-pencil'></span>
 					</a>
 				</td>
 				<td>
-					<a href='index.php?page=productViewList&folder=products&proDelid=$viewAllProListRow->id' class='btn btn-danger'>
+					<a href='index.php?page=productViewList&folder=products&proDelid=$viewAllProListRow->id' class='btn btn-danger disabled'>
 						<span class='glyphicon glyphicon-trash'></span>
 					</a>
 				</td>
@@ -62,7 +64,7 @@
 	</div>
 	<div class="row">
 		<div class="col-sm-10 col-sm-offset-1">
-			<table class="table table-bordered table-hover table-condensed">
+			<table class="table table-bordered table-hover table-condensed table-striped">
 				<thead class="text-green">
 					<th>Sl</th>
 					<th>Category Name</th>
@@ -70,6 +72,7 @@
 					<th>Unit Price/BDT</th>
 					<th>Quantity</th>
 					<th>Total Price/BDT</th>
+					<th>Date</th>
 					<th width="5%">Update</th>
 					<th>Delete</th>
 				<thead>

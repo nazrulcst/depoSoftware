@@ -194,11 +194,8 @@ $userNameRow=$userNameSelect->fetch(PDO::FETCH_ASSOC);
 		              </li>
 		              <!-- Menu Footer-->
 		              <li class="user-footer">
-		                <div class="pull-left">
-		                  <a href="#" class="btn btn-primary">Profile</a>
-		                </div>
-		                <div class="pull-right">
-		                  <a href="login.php?page=logOut" class="btn btn-primary">Sign out</a>
+		                <div>
+		                  <a href="login.php?page=logOut" class="btn btn-primary btn-block">Sign out</a>
 		                </div>
 		              </li>
 		            </ul>

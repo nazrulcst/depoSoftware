@@ -23,11 +23,8 @@
 				<td>$viewAllusrRow->userName</td>
 				<td>$viewAllusrRow->userType</td>
 				<td>$viewAllusrRow->status</td>
-				<td>
-					<a href='index.php?page=viewAlluser&folder=setup&activeId=$viewAllusrRow->id' class='btn btn-primary btn-sm'>active</a>
-				</td>
 				<td width='5%'>
-					<a href='index.php?page=viewAlluser&folder=setup&DeleteId=$viewAllusrRow->id' class='btn btn-danger btn-sm'>Delete</a>
+					<a href='index.php?page=viewAlluser&folder=setup&activeId=$viewAllusrRow->id' class='btn btn-primary btn-sm'>active</a>
 				</td>
 				<td>
 					<a href='index.php?page=viewAlluser&folder=setup&DeactiveId=$viewAllusrRow->id' class='btn btn-warning btn-sm'>Deactive</a>
@@ -45,12 +42,6 @@
 				if(isset($_GET['activeId'])){
 					$activeId=$_GET['activeId'];
 					echo "Are you sure active this user? <a href='action/userDeleteActiveDeactiveAction.php?staActive=$activeId'>Yes</a>&nbsp;&nbsp;
-						<a href='index.php?page=viewAlluser&folder=setup'>No</a>
-					";
-				}elseif(isset($_GET['DeleteId'])){
-					$deletId=$_GET['DeleteId'];
-					echo"
-						Are you sure delete this user? <a href='action/userDeleteActiveDeactiveAction.php?staDelete=$deletId'>Yes</a>&nbsp;&nbsp;
 						<a href='index.php?page=viewAlluser&folder=setup'>No</a>
 					";
 				}elseif(isset($_GET['DeactiveId'])){

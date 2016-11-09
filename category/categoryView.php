@@ -57,7 +57,7 @@ if(!$obj->userType()){ //it's use for restricstions for this application
 				</a>
 			</td>
 			<td>
-				<a href='index.php?page=categoryView&folder=category&deleteid={$categoryRow->id}' class='btn btn-danger'>
+				<a href='index.php?page=categoryView&folder=category&deleteid={$categoryRow->id}' class='btn btn-danger disabled'>
 					<span class='glyphicon glyphicon-trash'></span>
 				</a>
 			</td>

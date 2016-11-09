@@ -1,6 +1,17 @@
 <?php
 	require('database.php');
-	$package_nameSel=$db->prepare("SELECT * FROM pack_name");
+	$offerRecods=$db->prepare("SELECT * FROM pack_name");
+	$offerRecods->execute();
+	$totalRecods=$offerRecods->rowCount();
+	$perPage=10;
+	$totalPage=ceil($totalRecods/$perPage);
+	$pageNumber=(isset($_GET['pgNumber'])?$_GET['pgNumber']:$_GET['pgNumber']=1);
+	$startPage=($pageNumber-1)*$perPage;
+	if($pageNumber<1){
+		$startPage=(-$pageNumber+1)*$perPage;
+		echo"No recods found!";
+	}
+	$package_nameSel=$db->prepare("SELECT * FROM pack_name LIMIT $startPage,$perPage");
 	$package_nameSel->execute();
 	$incr='';
 	$data='';
@@ -17,7 +28,7 @@
 					</a>
 				</td>
 				<td>
-					<a class='btn btn-danger btn-sm' href='index.php?page=viewPackageName&folder=setup&offerDelId=$packRow->id'>
+					<a class='btn btn-danger btn-sm disabled' href='index.php?page=viewPackageName&folder=setup&offerDelId=$packRow->id'>
 						<span class='glyphicon glyphicon-trash'></span>
 					</a>
 				</td>
@@ -63,6 +74,35 @@
 					<?php echo $data;?>
 				</tbody>
 			</table><hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-8 col-sm-offset-2 text-center" style="margin-top:10px">
+			<?php
+				$prevPage=$pageNumber-1;
+				$nextPage=$pageNumber+1;
+				if($pageNumber<=1){
+					echo"<a href='index.php?page=viewAlluser&folder=setup&pgNumber={$prevPage}' class='btn btn-primary btn-sm disabled'><span class='glyphicon glyphicon-chevron-left'></span>Prev</a>&nbsp;&nbsp;";
+				}else{
+					echo"<a href='index.php?page=viewAlluser&folder=setup&pgNumber={$prevPage}' class='btn btn-primary btn-sm'><span class='glyphicon glyphicon-chevron-left'></span>Prev</a>&nbsp;&nbsp;";
+				}
+				if($pageNumber>$totalPage){
+					echo"Page not found";	
+				}else{
+					for($i=1;$i<=$totalPage;$i++){
+						if($i == $pageNumber){
+							echo"<a href='index.php?page=viewAlluser&folder=setup&pgNumber={$i}' class='btn btn-primary btn-sm'>$i</a>&nbsp;";
+						}else{
+							echo"<a href='index.php?page=viewAlluser&folder=setup&pgNumber={$i}' class='btn btn-default btn-sm'>$i</a>&nbsp;";
+						}
+					}
+				}
+			if($totalPage==$pageNumber){
+				echo"&nbsp;&nbsp;<a href='index.php?page=viewAlluser&folder=setup&pgNumber={$nextPage}' class='btn btn-primary btn-sm disabled'>Next<span class='glyphicon glyphicon-chevron-right'></span></a>";
+			}else{
+				echo"&nbsp;&nbsp;<a href='index.php?page=viewAlluser&folder=setup&pgNumber={$nextPage}' class='btn btn-primary btn-sm'>Next<span class='glyphicon glyphicon-chevron-right'></span></a>";
+			}	
+			?>
 		</div>
 	</div>
 </div>

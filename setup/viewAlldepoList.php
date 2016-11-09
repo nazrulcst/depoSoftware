@@ -26,7 +26,7 @@ while($viewAllDepoRow=$viewAllDepo->fetch(PDO::FETCH_OBJ)){
 	$sl++;
 	$data.="
 		<tr class='success'>
-			<td>$sl</td>
+			<td class='text-green'>$sl</td>
 			<td>$viewAllDepoRow->depo_name</td>
 			<td>$viewAllDepoRow->first_name</td>
 			<td>$viewAllDepoRow->phone</td>
@@ -37,9 +37,6 @@ while($viewAllDepoRow=$viewAllDepo->fetch(PDO::FETCH_OBJ)){
 			<td>$viewAllDepoRow->district</td>
 			<td>$viewAllDepoRow->division</td>
 			<td>$viewAllDepoRow->uploader</td>
-			<td>
-				<a href='index.php?page=viewAlldepoList&folder=setup&depoDelId=$viewAllDepoRow->id' class='btn btn-danger'><span class='glyphicon glyphicon-trash'></span></a>
-			</td>
 		</tr>	
 	";
 }
@@ -52,13 +49,6 @@ while($viewAllDepoRow=$viewAllDepo->fetch(PDO::FETCH_OBJ)){
 			<h3 class="text-center text-green">View all depo list</h3>
 			<hr>
 			<?php
-				if(isset($_GET['depoDelId'])){
-					$deletId=$_GET['depoDelId'];
-					echo" Are you sure ?
-						<a href='action/depoDeleteAction.php?depoDelid=$deletId' class='btn btn-danger'>Yse</a>&nbsp;&nbsp;
-						<a href='index.php?page=viewAlldepoList&folder=setup' class='btn btn-primary'>No</a>
-					";
-				}
 				if(isset($_SESSION['delDepoMsg'])){
 					echo $_SESSION['delDepoMsg'];
 					unset($_SESSION['delDepoMsg']);
@@ -69,7 +59,7 @@ while($viewAllDepoRow=$viewAllDepo->fetch(PDO::FETCH_OBJ)){
 	<div class="row">
 		<div class="col-sm-10 col-sm-offset-1">
 			<table class="table table-hover table-bordered table-striped table-condensed">
-				<thead>
+				<thead class="text-green">
 					<th>Sl No</th>
 					<th>Depo Name</th>
 					<th>Onwe Name</th>
@@ -81,7 +71,6 @@ while($viewAllDepoRow=$viewAllDepo->fetch(PDO::FETCH_OBJ)){
 					<th>District</th>
 					<th>Division</th>
 					<th>Uploader</th>
-					<th>Action</th>
 				</thead>
 				<tbody>
 					<?php echo $data;?>
