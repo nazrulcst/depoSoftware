@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2016 at 01:50 PM
+-- Generation Time: Nov 10, 2016 at 01:01 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -104,8 +104,7 @@ CREATE TABLE `depo_sales` (
 --
 
 INSERT INTO `depo_sales` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `date_time`) VALUES
-(1, 16, 1, 120, 20, 2400, '2016-11-09'),
-(2, 16, 3, 130, 30, 3700, '2016-11-09');
+(5, 16, 1, 120, 20, 2400, '2016-11-10');
 
 -- --------------------------------------------------------
 
@@ -128,8 +127,8 @@ CREATE TABLE `depo_store` (
 --
 
 INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`, `total_price`, `store_date`) VALUES
-(2, 16, 1, 0, 120, 0, '2016-11-09'),
-(3, 16, 3, 30, 130, 3900, '2016-11-08');
+(2, 16, 1, -355, 120, -42600, '2016-11-09'),
+(3, 16, 3, -50, 130, -6500, '2016-11-08');
 
 -- --------------------------------------------------------
 
@@ -150,7 +149,7 @@ CREATE TABLE `depo_total_sales` (
 --
 
 INSERT INTO `depo_total_sales` (`id`, `depo_id`, `depo_total_sales_quantity`, `today_sales_tk`, `date_time`) VALUES
-(1, 16, 30, 3700, '2016-11-09');
+(16, 16, 260, 25175, '2016-11-10');
 
 -- --------------------------------------------------------
 
@@ -278,7 +277,8 @@ CREATE TABLE `package` (
 --
 
 INSERT INTO `package` (`id`, `depo_id`, `store_id`, `total_item`, `percentageOff`, `total_sales_taka`, `package_date`) VALUES
-(14, 16, 2, 10, 0, 1200, '2016-11-09');
+(17, 16, 2, 60, 0.3, 3600, '2016-11-10'),
+(18, 16, 3, 20, 0.1, 1300, '2016-11-10');
 
 -- --------------------------------------------------------
 
@@ -342,6 +342,13 @@ CREATE TABLE `total_warranty` (
   `warranty_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `total_warranty`
+--
+
+INSERT INTO `total_warranty` (`id`, `depo_id`, `warranty_quantity`, `total_warranty_tk`, `warranty_date`) VALUES
+(1, 16, 2, 240, '2016-11-10');
+
 -- --------------------------------------------------------
 
 --
@@ -382,6 +389,14 @@ CREATE TABLE `warranty` (
   `replace_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `warranty`
+--
+
+INSERT INTO `warranty` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `replace_date`) VALUES
+(1, 16, 1, 120, 2, 240, '2016-11-10'),
+(2, 16, 3, 130, 10, 1300, '2016-11-10');
+
 -- --------------------------------------------------------
 
 --
@@ -403,8 +418,8 @@ CREATE TABLE `whole_sales` (
 --
 
 INSERT INTO `whole_sales` (`id`, `depo_id`, `pack_name_id`, `total_item`, `percentage`, `whole_sales_tk`, `whole_date`) VALUES
-(1, 16, 4, 60, 25, 1500, '2016-11-09'),
-(2, 16, 3, 30, 15, 330, '2016-11-09');
+(3, 16, 3, 20, 15, 375, '2016-11-10'),
+(4, 16, 4, 80, 25, 2500, '2016-11-10');
 
 -- --------------------------------------------------------
 
@@ -580,7 +595,7 @@ ALTER TABLE `depo`
 -- AUTO_INCREMENT for table `depo_sales`
 --
 ALTER TABLE `depo_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `depo_store`
 --
@@ -590,7 +605,7 @@ ALTER TABLE `depo_store`
 -- AUTO_INCREMENT for table `depo_total_sales`
 --
 ALTER TABLE `depo_total_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `due`
 --
@@ -620,7 +635,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `pack_name`
 --
@@ -635,7 +650,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `total_warranty`
 --
 ALTER TABLE `total_warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `user`
 --
@@ -645,12 +660,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `warranty`
 --
 ALTER TABLE `warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `whole_sales`
 --
 ALTER TABLE `whole_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `workshop_loss`
 --

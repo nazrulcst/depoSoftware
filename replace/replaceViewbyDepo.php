@@ -14,7 +14,7 @@
 		$startPage=(int)(-$pageNumber+1)*$per_page_row;
 		$_SESSION['erMsg']="You are enter wrong values !";
 	}
-	$selWarranty=$db->prepare("SELECT *,warranty.quantity AS repQuantity,warranty.total_price AS repPrice,depo.depo_name AS depoName,products.pro_name AS proName FROM warranty LEFT JOIN depo ON warranty.depo_id=depo.id LEFT JOIN user ON depo.user_id=user.id LEFT JOIN products ON warranty.pro_id=products.id WHERE depo.user_id=? LIMIT $startPage,$per_page_row");
+	$selWarranty=$db->prepare("SELECT *,warranty.quantity AS repQuantity,warranty.total_price AS repPrice,depo.depo_name AS depoName,products.pro_name AS proName FROM warranty LEFT JOIN depo ON warranty.depo_id=depo.id LEFT JOIN user ON depo.user_id=user.id LEFT JOIN products ON warranty.pro_id=products.id WHERE depo.user_id=? ORDER BY replace_date DESC LIMIT $startPage,$per_page_row");
 	$selWarranty->bindParam(1,$userLoginId);
 	$selWarranty->execute();
 	$sl='';

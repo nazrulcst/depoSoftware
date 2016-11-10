@@ -18,6 +18,8 @@
 	$curTimeStr=strtotime($currentDate);
 	$depoSalesUpdExe='';
 	$depoSalesInsExe='';
+	$totalDepoSalesUpdExe='';
+	$totalDepoSalesInsExe='';
 	if(!empty($depoNameId) && !empty($proNameId) && !empty($proUnitPrice) && !empty($salesQuantity)){
 		$db->beginTransaction();
 	// Depo store select for store Quantity minus Query 
@@ -77,11 +79,55 @@
 			$depoSalesInsExe=$todaySalesInsert->execute();
 		}
 
-		if($depoSalesUpdExe){
+	// select from depo sales/today sales for total sales table report
+		$depoSalesQuery=$db->prepare("SELECT * FROM  depo_sales WHERE depo_id=? AND date_time=?");
+		$depoSalesQuery->bindParam(1,$depoNameId);
+		$depoSalesQuery->bindParam(2,$currentDate);
+		$depoSalesQuery->execute();
+		$depoTotalSales='';
+		$totalSalesQuantity='';
+		$depoId='';
+		$i=1;
+		while($row=$depoSalesQuery->fetch(PDO::FETCH_OBJ)){
+			$depoTotalSales+=$row->total_price;
+			$totalSalesQuantity+=$row->quantity;
+			$depoId=$row->depo_id;
+			$i++;
+		}
+	// Exitst depo id in depo total sales table
+		$selDepoTotalSales=$db->prepare("SELECT * FROM depo_total_sales WHERE depo_id=? AND date_time=?");
+		$selDepoTotalSales->bindParam(1,$depoNameId);
+		$selDepoTotalSales->bindParam(2,$currentDate);
+		$selDepoTotalSales->execute();
+		$selRow=$selDepoTotalSales->fetch(PDO::FETCH_ASSOC);
+		$exist_depo_id=$selRow['depo_id'];
+		$exist_depo_Quan=$selRow['depo_total_sales_quantity'];
+		$exist_depo_tk=$selRow['today_sales_tk'];
+		$upQuantity=$salesQuantity+$exist_depo_Quan;
+		$upTaka=$totalTaka+$exist_depo_tk;
+		if($exist_depo_id){ // if Exist depo id in same date then execute update query else insert query
+			// Depo total sales update Query
+			$depoTotalSaleUp=$db->prepare("UPDATE depo_total_sales SET depo_total_sales_quantity=?,today_sales_tk=? WHERE depo_id=? AND date_time=?");
+			$depoTotalSaleUp->bindParam(1,$upQuantity);
+			$depoTotalSaleUp->bindParam(2,$upTaka);
+			$depoTotalSaleUp->bindParam(3,$exist_depo_id);
+			$depoTotalSaleUp->bindParam(4,$currentDate);
+			$totalDepoSalesUpdExe=$depoTotalSaleUp->execute();	
+		}else{
+			// depo total sales insert query
+			$totalSalesInsert=$db->prepare("INSERT INTO depo_total_sales SET depo_id=?,depo_total_sales_quantity=?,today_sales_tk=?,date_time=?");
+			$totalSalesInsert->bindParam(1,$depoNameId);
+			$totalSalesInsert->bindParam(2,$totalSalesQuantity);
+			$totalSalesInsert->bindParam(3,$depoTotalSales);
+			$totalSalesInsert->bindParam(4,$currentDate);
+			$totalDepoSalesInsExe=$totalSalesInsert->execute();	
+		}
+
+		if($depoSalesUpdExe && $totalDepoSalesUpdExe OR $totalDepoSalesInsExe){
 			$db->commit();
 			$_SESSION['rpMsg']="<p class='alert alert-success'>Query has been successful</p>";
 			header("Location:../index.php?page=depoTodaySales&folder=depoinfo");
-		}elseif($depoSalesInsExe){
+		}elseif($depoSalesInsExe && $totalDepoSalesUpdExe OR $totalDepoSalesInsExe){
 			$db->commit();
 			$_SESSION['rpMsg']="<p class='alert alert-success'>Query has been successful</p>";
 			header("Location:../index.php?page=depoTodaySales&folder=depoinfo");
@@ -94,8 +140,5 @@
 		$_SESSION['rpMsg']="<p class='alert alert-warning'>Please fill up all fields !</p>";
 		header("Location:../index.php?page=depoTodaySales&folder=depoinfo");
 	}
-	
-	
-	
-		
+
 ?>

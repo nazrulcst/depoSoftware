@@ -11,7 +11,7 @@
 		$startPage=(int)(-$pageNumber+1)*$per_page_row;
 		$_SESSION['erMsg']="You are enter wrong values !";
 	}
-	$showDateWorkshop=$db->prepare("SELECT *,workshop_loss.quantity AS lossQuantity,workshop_loss.total_price AS lossPrice, products.pro_name AS proName FROM workshop_loss LEFT JOIN products ON workshop_loss.pro_id=products.id LIMIT $startPage,$per_page_row");
+	$showDateWorkshop=$db->prepare("SELECT *,workshop_loss.quantity AS lossQuantity,workshop_loss.total_price AS lossPrice, products.pro_name AS proName FROM workshop_loss LEFT JOIN products ON workshop_loss.pro_id=products.id ORDER BY enter_date DESC LIMIT $startPage,$per_page_row");
 	$showDateWorkshop->execute();
 	$sl='';
 	$data='';

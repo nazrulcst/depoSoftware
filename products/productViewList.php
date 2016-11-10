@@ -11,7 +11,7 @@
 		$start=(-$pageNumber+1)*$itemPerpage;
 		echo"No recods found !";
 	}
-	$viewAllProList=$db->prepare("SELECT products.*,category.catName FROM products LEFT JOIN category ON products.cat_id=category.id LIMIT $start,$itemPerpage");
+	$viewAllProList=$db->prepare("SELECT products.*,category.catName FROM products LEFT JOIN category ON products.cat_id=category.id ORDER BY entry_date DESC LIMIT $start,$itemPerpage");
 	$viewAllProList->execute();
 	$sl='';
 	$data='';
