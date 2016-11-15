@@ -56,7 +56,7 @@
 						<label for="name">Choice a category :</label>
 						<select name="selectMode" class="form-control" id="actionSel" required="1">
 							<option value="">Select your option</option>
-							<option value="replaced">Replaced</option>
+							<option value="replaced">Repaired</option>
 							<option value="damaged">Damaged</option>
 						</select>
 					</div>

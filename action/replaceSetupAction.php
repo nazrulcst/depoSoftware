@@ -65,9 +65,6 @@
 			$totalQuantity+=$selProRow['quantity'];
 			$i++;
 		}
-		ECHO"<BR>";
-		echo "warranty table total quantity".$totalQuantity."<br>";
-		echo "warranty table total taka".$totalPrice."<br>";
 	// Total_warranty table data select
 		$selecTotalWarranty=$db->prepare("SELECT total_warranty.*,total_warranty.depo_id AS depoId,depo.id FROM total_warranty LEFT JOIN depo ON total_warranty.depo_id=depo.id WHERE total_warranty.depo_id=? AND total_warranty.warranty_date=?");
 		$selecTotalWarranty->bindParam(1,$depoId);
@@ -75,18 +72,14 @@
 		$selecTotalWarranty->execute();
 		$totalWarrantyRow=$selecTotalWarranty->fetch(PDO::FETCH_ASSOC);
 		$totalWarrExistDepoId=$totalWarrantyRow['depo_id'];
-		$totalWarrExistQuantity=$totalWarrantyRow['warranty_quantity'];
-		$totalWarrExistTotalTaka=$totalWarrantyRow['total_warranty_tk'];
 		$totalWarrExistDate=$totalWarrantyRow['warranty_date'];
 		$strExistDate=strtotime($totalWarrExistDate);
-		$updateTotalQuantity=$totalWarrExistQuantity+$repQuantity;
-		$updateTotalWarrantyTaka=$repTotalPrice+$totalWarrExistTotalTaka;
 		// total warranty table data select query
 		if($totalWarrExistDepoId==$depoId && $strCurrentDate==$strExistDate){
 			// Total warranty table data Update
 			$totalWarrantyUpdate=$db->prepare("UPDATE total_warranty SET warranty_quantity=?,total_warranty_tk=? WHERE depo_id=? AND warranty_date=?");
-			$totalWarrantyUpdate->bindParam(1,$updateTotalQuantity);
-			$totalWarrantyUpdate->bindParam(2,$updateTotalWarrantyTaka);
+			$totalWarrantyUpdate->bindParam(1,$totalQuantity);
+			$totalWarrantyUpdate->bindParam(2,$totalPrice);
 			$totalWarrantyUpdate->bindParam(3,$existDepoId);
 			$totalWarrantyUpdate->bindParam(4,$totalWarrExistDate);
 			$totalWarUpExe=$totalWarrantyUpdate->execute();
