@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2016 at 01:01 PM
+-- Generation Time: Nov 15, 2016 at 12:16 PM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -104,7 +104,8 @@ CREATE TABLE `depo_sales` (
 --
 
 INSERT INTO `depo_sales` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `date_time`) VALUES
-(5, 16, 1, 120, 20, 2400, '2016-11-10');
+(5, 16, 1, 120, 20, 2400, '2016-11-10'),
+(6, 16, 1, 120, 10, 1200, '2016-11-15');
 
 -- --------------------------------------------------------
 
@@ -127,8 +128,8 @@ CREATE TABLE `depo_store` (
 --
 
 INSERT INTO `depo_store` (`id`, `depo_id`, `pro_id`, `pro_quantity`, `pro_price`, `total_price`, `store_date`) VALUES
-(2, 16, 1, -355, 120, -42600, '2016-11-09'),
-(3, 16, 3, -50, 130, -6500, '2016-11-08');
+(2, 16, 1, -435, 120, -52200, '2016-11-09'),
+(3, 16, 3, -60, 130, -7800, '2016-11-08');
 
 -- --------------------------------------------------------
 
@@ -149,7 +150,9 @@ CREATE TABLE `depo_total_sales` (
 --
 
 INSERT INTO `depo_total_sales` (`id`, `depo_id`, `depo_total_sales_quantity`, `today_sales_tk`, `date_time`) VALUES
-(16, 16, 260, 25175, '2016-11-10');
+(16, 16, 260, 25175, '2016-11-10'),
+(17, 16, 10, 300, '2016-11-12'),
+(18, 16, 70, 6100, '2016-11-15');
 
 -- --------------------------------------------------------
 
@@ -202,6 +205,8 @@ CREATE TABLE `final_balance` (
   `id` int(11) NOT NULL,
   `total_pro_quantity` int(11) NOT NULL,
   `total_pro_taka` int(11) NOT NULL,
+  `total_store_quantity` int(11) NOT NULL,
+  `total_store_taka` int(11) NOT NULL,
   `total_sales_quantity` int(11) NOT NULL,
   `total_sales_taka` int(11) NOT NULL,
   `total_damage_quantity` int(11) NOT NULL,
@@ -216,14 +221,10 @@ CREATE TABLE `final_balance` (
 -- Dumping data for table `final_balance`
 --
 
-INSERT INTO `final_balance` (`id`, `total_pro_quantity`, `total_pro_taka`, `total_sales_quantity`, `total_sales_taka`, `total_damage_quantity`, `total_damage_tk`, `month_total_quantity`, `month_total_cost`, `total_profit`, `final_bal_date`) VALUES
-(2, 610, 91200, 0, 300, 240, 28800, 610, 91500, 62700, '2016-10-23'),
-(3, 610, 91200, 0, 300, 240, 28800, 610, 91500, 62700, '2016-10-23'),
-(4, 610, 91200, 0, 300, 240, 28800, 610, 91500, 62700, '2016-10-23'),
-(5, 610, 91200, 0, 300, 240, 28800, 610, 91500, 62700, '2016-10-23'),
-(6, 610, 91200, 0, 300, 240, 28800, 610, 91500, 62700, '2016-10-23'),
-(12, 932, 60420, 101, 6360, 310, 48400, 1043, 67230, 18830, '2016-10-31'),
-(13, 932, 60420, 101, 6360, 310, 48400, 1043, 67230, 18830, '2016-10-31');
+INSERT INTO `final_balance` (`id`, `total_pro_quantity`, `total_pro_taka`, `total_store_quantity`, `total_store_taka`, `total_sales_quantity`, `total_sales_taka`, `total_damage_quantity`, `total_damage_tk`, `month_total_quantity`, `month_total_cost`, `total_profit`, `final_bal_date`) VALUES
+(12, 932, 60420, 0, 0, 101, 6360, 310, 48400, 1043, 67230, 18830, '2016-10-31'),
+(13, 932, 60420, 0, 0, 101, 6360, 310, 48400, 1043, 67230, 18830, '2016-10-31'),
+(14, 50930, 6611600, -495, -60000, 340, 31575, 10, 1200, 50435, 6551600, 6550400, '2016-11-30');
 
 -- --------------------------------------------------------
 
@@ -278,7 +279,8 @@ CREATE TABLE `package` (
 
 INSERT INTO `package` (`id`, `depo_id`, `store_id`, `total_item`, `percentageOff`, `total_sales_taka`, `package_date`) VALUES
 (17, 16, 2, 60, 0.3, 3600, '2016-11-10'),
-(18, 16, 3, 20, 0.1, 1300, '2016-11-10');
+(18, 16, 3, 20, 0.1, 1300, '2016-11-10'),
+(19, 16, 2, 40, 0.2, 2400, '2016-11-15');
 
 -- --------------------------------------------------------
 
@@ -347,7 +349,8 @@ CREATE TABLE `total_warranty` (
 --
 
 INSERT INTO `total_warranty` (`id`, `depo_id`, `warranty_quantity`, `total_warranty_tk`, `warranty_date`) VALUES
-(1, 16, 2, 240, '2016-11-10');
+(1, 16, 2, 240, '2016-11-10'),
+(2, 16, 51, 6570, '2016-11-15');
 
 -- --------------------------------------------------------
 
@@ -395,7 +398,9 @@ CREATE TABLE `warranty` (
 
 INSERT INTO `warranty` (`id`, `depo_id`, `pro_id`, `pro_price`, `quantity`, `total_price`, `replace_date`) VALUES
 (1, 16, 1, 120, 2, 240, '2016-11-10'),
-(2, 16, 3, 130, 10, 1300, '2016-11-10');
+(2, 16, 3, 130, 10, 1300, '2016-11-10'),
+(3, 16, 1, 120, 6, 720, '2016-11-15'),
+(4, 16, 3, 130, 45, 5850, '2016-11-15');
 
 -- --------------------------------------------------------
 
@@ -419,7 +424,9 @@ CREATE TABLE `whole_sales` (
 
 INSERT INTO `whole_sales` (`id`, `depo_id`, `pack_name_id`, `total_item`, `percentage`, `whole_sales_tk`, `whole_date`) VALUES
 (3, 16, 3, 20, 15, 375, '2016-11-10'),
-(4, 16, 4, 80, 25, 2500, '2016-11-10');
+(4, 16, 4, 80, 25, 2500, '2016-11-10'),
+(5, 16, 4, 10, 25, 300, '2016-11-12'),
+(6, 16, 3, 20, 15, 375, '2016-11-15');
 
 -- --------------------------------------------------------
 
@@ -434,6 +441,13 @@ CREATE TABLE `workshop_loss` (
   `total_price` int(11) NOT NULL,
   `enter_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `workshop_loss`
+--
+
+INSERT INTO `workshop_loss` (`id`, `pro_id`, `quantity`, `total_price`, `enter_date`) VALUES
+(1, 1, 10, 1200, '2016-11-12');
 
 --
 -- Indexes for dumped tables
@@ -595,7 +609,7 @@ ALTER TABLE `depo`
 -- AUTO_INCREMENT for table `depo_sales`
 --
 ALTER TABLE `depo_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `depo_store`
 --
@@ -605,7 +619,7 @@ ALTER TABLE `depo_store`
 -- AUTO_INCREMENT for table `depo_total_sales`
 --
 ALTER TABLE `depo_total_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `due`
 --
@@ -620,7 +634,7 @@ ALTER TABLE `due_pay`
 -- AUTO_INCREMENT for table `final_balance`
 --
 ALTER TABLE `final_balance`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `message`
 --
@@ -635,7 +649,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `package`
 --
 ALTER TABLE `package`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `pack_name`
 --
@@ -650,7 +664,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `total_warranty`
 --
 ALTER TABLE `total_warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `user`
 --
@@ -660,17 +674,17 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `warranty`
 --
 ALTER TABLE `warranty`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `whole_sales`
 --
 ALTER TABLE `whole_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `workshop_loss`
 --
 ALTER TABLE `workshop_loss`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints for dumped tables
 --
