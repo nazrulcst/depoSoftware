@@ -48,6 +48,16 @@
 		$updateProducts->bindParam(5,$productId);
 		$proUpExe=$updateProducts->execute();
 	}elseif($selectMode=='damaged'){
+		// product table update query
+		$updateQuantity=$quantity-$repQuantity;
+		$updateTotalPrice=$totalPrice-$entPrice;
+		$updateProducts=$db->prepare("UPDATE products SET user_id=?,quantity=?,total_price=?,uploader=? WHERE id=?");
+		$updateProducts->bindParam(1,$userLoginId);
+		$updateProducts->bindParam(2,$updateQuantity);
+		$updateProducts->bindParam(3,$updateTotalPrice);
+		$updateProducts->bindParam(4,$userType);
+		$updateProducts->bindParam(5,$productId);
+		$proUpExe=$updateProducts->execute();
 		// workshop_loss table data select
 		$workshop_lossSelQuery=$db->prepare("SELECT workshop_loss.*,workshop_loss.id AS workshop_lossId,products.id AS productsId FROM workshop_loss LEFT JOIN products ON workshop_loss.pro_id=products.id WHERE workshop_loss.pro_id=?");
 		$workshop_lossSelQuery->bindParam(1,$ProNameId);

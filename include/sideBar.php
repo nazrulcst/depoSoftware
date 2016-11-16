@@ -71,6 +71,23 @@
 			          </ul>
 			        </li>
 		        <?php } ?>
+		        <!--Office utilities-->
+		        <?php
+		        	if($obj->userType()){
+		        ?>
+		        	<li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='officeUtilities')?'active':null;?> treeview">
+		        		<a href="#">
+			            	<i class="fa fa-industry text-green"></i> <span>Office Utilities</span>
+			            	<span class="pull-right-container">
+			              		<i class="fa fa-angle-left pull-right"></i>
+			            	</span>
+		          		</a>
+			          	<ul class="treeview-menu">
+			            	<li class="<?php echo (isset($_GET['page']) && $_GET['page']=='officeUtilitiesSetup')? 'active':null;?>"><a href="index.php?page=officeUtilitiesSetup&folder=officeUtilities"><i class="fa fa-circle-o"></i>Office Utilities add</a></li>
+			            </ul>
+		        	</li>
+		        	<?php } ?>
+		        <!--/Office utilities-->
 		        <!--Depo Info start-->
 		        <li class="<?php echo(isset($_GET['folder']) && $_GET['folder']=='depoinfo')?'active':null;?> treeview">
 		          <a href="#">
