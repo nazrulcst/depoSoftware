@@ -33,7 +33,7 @@
 				<td>{$packageRow['Dname']}</td>
 				<td>{$packageRow['Pname']}</td>
 				<td>{$packageRow['total_item']}</td>
-				<td>{$packageRow['percentageOff']}</td>
+				<td>{$packageRow['percentageOff']}&nbsp;%</td>
 				<td>{$packageRow['total_sales_taka']}</td>
 				<td>{$date}</td>
 			</tr>

@@ -53,7 +53,12 @@
 			$totalSIng+=$sinProPrice;//its for depototal sales
 			$sinProPerPrice=$offPercent[$key]*$existPrice;//input single percentage
 			$toalTak=$sinProPrice+$sinProPerPrice;//input total taka
-			$percentageOff=($offPercent[$key]/100);//single pro_percentage
+			//single percentage
+			$mainProTaka=$productQuantity[$key]*$existPrice;
+			$perProTaka=$offPercent[$key]*$existPrice;
+			$per=$mainProTaka/$perProTaka;
+			$percentageOff=(100/$per);//single pro_percentage
+			
 			$totalProPrice=$toalTak-$sinProPerPrice;//product Totalprice
 			$updateQuantity=$existTotalProQuan-$entTotalQuan;//depo_store update quantity
 			$depoUpdateTk=$updateQuantity*$existPrice;//depo_store update taka
